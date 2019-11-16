@@ -35,9 +35,9 @@ export default class Modal extends Component {
 						<DialogContentText id="alert-dialog-description">{message}</DialogContentText>
 					</DialogContent>
 				</Dialog>
-				<Button variant="outlined" color="primary" onClick={this.open}>
+				{/* <Button variant="outlined" color="primary" onClick={this.open}>
 					{message}
-				</Button>
+				</Button> */}
 			</div>
 		);
 	}

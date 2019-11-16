@@ -11,7 +11,9 @@ function App() {
 	return (
 		<div>
 			<Header />
-			<Connect />
+			<Container>
+				<Connect />
+			</Container>
 		</div>
 	);
 }

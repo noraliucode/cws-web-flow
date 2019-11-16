@@ -13,7 +13,6 @@ const ContainerMain = styled.div`
 	width: 100%;
 	background: #333639;
 	position: absolute;
-	align-items: center;
 	display: flex;
 	justify-content: center;
 `;

@@ -14,6 +14,7 @@ export default class Button extends Component {
 
 const ButtonMain = styled.div`
 	width: 320px;
+	max-width: 320px;
 	height: 62px;
 	border-radius: 30px;
 	border: solid 1px #ffba12;
@@ -25,6 +26,9 @@ const ButtonMain = styled.div`
 	color: #ffba12;
 	&:hover {
 		border-color: #f09307;
+	}
+	@media (max-width: 480px) {
+		width: 100%;
 	}
 `;
 const Text = styled.div`font-size: ${(props) => (props.fontSize ? props.fontSize : '16px')};`;
