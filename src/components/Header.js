@@ -1,22 +1,25 @@
-import React, { Component } from 'react'
-import styled from 'styled-components'
+import React, { Component } from 'react';
+import styled from 'styled-components';
+
+export const HEADER_HEIGHT = 74;
 
 export default class Header extends Component {
-  render() {
-    return (
-      <Container>
-        <Image alt="img" src={'CWS_Logo.png'} />
-      </Container>
-    )
-  }
+	render() {
+		return (
+			<HeaderContainer>
+				<Image alt="img" src={'CWS_Logo.png'} />
+			</HeaderContainer>
+		);
+	}
 }
 
-const Container = styled.div`
-width: 100%;
-background: #333639;
-display: flex;
+const HeaderContainer = styled.div`
+	width: 100%;
+	background: #333639;
+	display: flex;
+	height: ${HEADER_HEIGHT}px;
+	align-items: center;
+	padding-left: 20px;
 `;
 
-const Image = styled.img`
-width: 200px;
-`;
+const Image = styled.img`width: 100px;`;

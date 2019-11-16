@@ -3,28 +3,17 @@ import logo from './logo.svg';
 import './App.css';
 import Button from './components/Button';
 import Header from './components/Header';
+import Modal from './components/Modal';
+import Container from './components/Container';
+import Connect from './pages/Connect';
 
 function App() {
-  return (
-    <div className="App">
-      <Header />
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <Button label={'test!!!!'}/>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<div>
+			<Header />
+			<Connect />
+		</div>
+	);
 }
 
 export default App;
