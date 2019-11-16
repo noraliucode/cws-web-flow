@@ -3,15 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@coolwallets/eth": "^0.1.6",
+    "@coolwallets/transport-web-ble": "0.0.16",
+    "@coolwallets/wallet": "0.0.1-beta",
     "@material-ui/core": "^4.6.1",
     "@material-ui/icons": "^4.5.1",
+    "express": "^4.17.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-scripts": "3.2.0",
     "styled-components": "^4.4.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
