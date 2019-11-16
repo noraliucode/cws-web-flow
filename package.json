@@ -8,7 +8,12 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-scripts": "3.2.0",
-    "styled-components": "^4.4.1"
+    "styled-components": "^4.4.1",
+    "@coolwallets/devices": "^0.0.7",
+    "@coolwallets/eth": "0.1.1",
+    "@coolwallets/transport": "0.0.8",
+    "@coolwallets/transport-web-ble": "^0.0.10",
+    "@coolwallets/wallet": "^0.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
