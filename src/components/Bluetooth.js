@@ -4,16 +4,20 @@ import Button from './Button';
 
 export default class Bluetooth extends Component {
 	state = {
-		transport: {}
+		transport: {},
+		device: {}
 	};
 	connect = async () => {
-		console.log('click!!');
 		WebBleTransport.listen(async (error, device) => {
 			if (device) {
+				console.log('device', device);
 				const transport = await WebBleTransport.connect(device);
 				this.setState({
-					transport
+					transport,
+					device
 				});
+				this.props.isConnected(true);
+				this.props.device(device);
 				return transport;
 			}
 			throw error;

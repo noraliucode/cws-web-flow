@@ -3,7 +3,7 @@ import Modal from '../components/Modal';
 // import LaptopChromebookIcon from '@material-ui/icons/LaptopChromebook';
 // import BluetoothIcon from '@material-ui/icons/Bluetooth';
 import styled from 'styled-components';
-import Bluetooth from '../components/Bluetooth';
+import BluetoothConnectButton from '../components/Bluetooth';
 
 const styles = {
 	largeIcon: {
@@ -13,19 +13,29 @@ const styles = {
 };
 
 export default class Connect extends Component {
+	state = {
+		isConnected: false,
+		device: null
+	};
 	render() {
+		const { isConnected, device } = this.state;
 		return (
 			<Wrapper>
-				<Title>Wallet is not connected</Title>
+				<Title> {isConnected && device ? `Connected with ${device.name}` : 'Wallet is not connected'}</Title>
 				<Modal image={'contract.png'} message={'Signing...'} title={''} />
 				<IconWrapper>
 					{/* <LaptopChromebookIcon htmlColor={'#7f7f7f'} fontSize="large" />
 					<BluetoothIcon htmlColor={'#7f7f7f'} fontSize="large" /> */}
 					<Image src={'laptop.png'} />
-					<Image src={'bluetooth.png'} />
+					<Image src={isConnected ? 'bluetooth_connected.png' : 'bluetooth.png'} />
 					<Image src={'card.png'} />
 				</IconWrapper>
-				<Bluetooth />
+				{isConnected && device ? null : (
+					<BluetoothConnectButton
+						isConnected={(isConnected) => this.setState({ isConnected })}
+						device={(device) => this.setState({ device })}
+					/>
+				)}
 			</Wrapper>
 		);
 	}
