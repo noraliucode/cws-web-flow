@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import Container from '../components/Container';
-import Button from '../components/Button';
 import Modal from '../components/Modal';
 // import LaptopChromebookIcon from '@material-ui/icons/LaptopChromebook';
 // import BluetoothIcon from '@material-ui/icons/Bluetooth';
 import styled from 'styled-components';
+import Bluetooth from '../components/Bluetooth';
 
 const styles = {
 	largeIcon: {
@@ -26,7 +25,7 @@ export default class Connect extends Component {
 					<Image src={'bluetooth.png'} />
 					<Image src={'card.png'} />
 				</IconWrapper>
-				<Button label={'Connect'} />
+				<Bluetooth />
 			</Wrapper>
 		);
 	}
@@ -34,7 +33,6 @@ export default class Connect extends Component {
 
 const Image = styled.img`
 	height: 40px;
-	// margin: 0 50px;
 	@media (max-width: 480px) {
 		margin: 0 10%;
 	}
