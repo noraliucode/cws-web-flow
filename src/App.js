@@ -1,23 +1,41 @@
 import React, { Component } from 'react'
-// import logo from './logo.svg'
 import './App.css'
-// import Button from './components/Button'
 import Header from './components/Header'
-// import Modal from './components/Modal'
 import Container from './components/Container'
 import Connect from './pages/Connect'
-
-import CoolWalletSBridge from './scripts/listeners'
+import WebBleTransport from '@coolwallets/transport-web-ble'
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      transport: null,
+      blockOnFirstCall: true,
+      bc: new BroadcastChannel('coolwallets')
+    }
+  }
 
+  connect = () => {
+    WebBleTransport.listen(async (error, device) => {
+      if (error) throw error
+      
+      const transport = await WebBleTransport.connect(device);
+      this.setState({
+        transport,
+        blockOnFirstCall: true
+      });
+      this.state.bc.postMessage({ target: 'connection-success' })
+      
+    });
+  }
+  
   render() {
-    const bridge = new CoolWalletSBridge()
+    
     return (
       <div>
         <Header />
         <Container>
-          <Connect bridge={bridge} />
+          <Connect connect={this.connect} />
         </Container>
       </div>
     )

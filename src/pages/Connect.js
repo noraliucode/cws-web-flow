@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
-import Container from '../components/Container';
 import Button from '../components/Button';
 import Modal from '../components/Modal';
-// import LaptopChromebookIcon from '@material-ui/icons/LaptopChromebook';
-// import BluetoothIcon from '@material-ui/icons/Bluetooth';
 import styled from 'styled-components';
 
-const styles = {
-	largeIcon: {
-		width: 60,
-		height: 60
-	}
-};
+// const styles = {
+// 	largeIcon: {
+// 		width: 60,
+// 		height: 60
+// 	}
+// };
 
 export default class Connect extends Component {
 	render() {
@@ -26,7 +23,7 @@ export default class Connect extends Component {
 					<Image src={'bluetooth.png'} />
 					<Image src={'card.png'} />
 				</IconWrapper>
-				<Button label={'Connect'} />
+				<Button onClick={this.props.connect} label={'Connect'}  />
 			</Wrapper>
 		);
 	}

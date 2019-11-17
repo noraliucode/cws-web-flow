@@ -5,7 +5,7 @@ export default class Button extends Component {
 	render() {
 		const { fontSize } = this.props;
 		return (
-			<ButtonMain>
+			<ButtonMain onClick={this.props.onClick} >
 				<Text fontSize={fontSize}>{this.props.label}</Text>
 			</ButtonMain>
 		);
