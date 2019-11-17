@@ -5,7 +5,8 @@ export default class IframeEventHandler {
    */
   constructor(bc) {
     this.blockOnFirstCall = true
-    const tabDomain = 'https://coolwallets-connect.herokuapp.com/'
+    // const tabDomain = 'https://coolwallets-connect.herokuapp.com/'
+    const tabDomain = 'http://localhost:3000'
     if (window.parent !== window) {
       console.log(`setting up listeners as iframe...`)
       // IFRAME

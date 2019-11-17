@@ -32,6 +32,7 @@ export default class Connect extends Component {
 					<BluetoothConnectButton
 						isConnected={(isConnected) => this.setState({ isConnected })}
 						device={(device) => this.setState({ device })}
+						webpageHandler ={this.props.webpageHandler}
 					/>
 				)}
 			</Wrapper>

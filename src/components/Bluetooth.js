@@ -4,7 +4,7 @@ import Button from './Button';
 
 export default class Bluetooth extends Component {
 	state = {
-		transport: {},
+		transport: null,
 		device: {}
 	};
 	connect = async () => {
@@ -16,6 +16,10 @@ export default class Bluetooth extends Component {
 					transport,
 					device
 				});
+				// inform IFRAME ready for data
+				let bc = new BroadcastChannel('coolwallets')
+				bc.postMessage({ target: 'connection-success' })
+				this.props.webpageHandler.setTransport(transport)
 				this.props.isConnected(true);
 				this.props.device(device);
 				return transport;
@@ -28,7 +32,7 @@ export default class Bluetooth extends Component {
 		const { transport } = this.state;
 		WebBleTransport.disconnect(transport.device.id);
 		this.setState({
-			transport: {}
+			transport: null
 		});
 	};
 	render() {
