@@ -3,17 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.6.1",
-    "@material-ui/icons": "^4.5.1",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-scripts": "3.2.0",
-    "styled-components": "^4.4.1",
     "@coolwallets/devices": "^0.0.7",
     "@coolwallets/eth": "0.1.1",
     "@coolwallets/transport": "0.0.8",
     "@coolwallets/transport-web-ble": "^0.0.10",
-    "@coolwallets/wallet": "^0.0.1"
+    "@coolwallets/wallet": "^0.0.1",
+    "@material-ui/core": "^4.6.1",
+    "@material-ui/icons": "^4.5.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-redux": "^7.1.3",
+    "react-scripts": "3.2.0",
+    "redux": "^4.0.4",
+    "styled-components": "^4.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
