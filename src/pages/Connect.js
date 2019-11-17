@@ -5,13 +5,6 @@ import Modal from '../components/Modal';
 import styled from 'styled-components';
 import BluetoothConnectButton from '../components/Bluetooth';
 
-const styles = {
-	largeIcon: {
-		width: 60,
-		height: 60
-	}
-};
-
 export default class Connect extends Component {
 	state = {
 		isConnected: false,

@@ -7,11 +7,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import { connect } from 'react-redux';
 import { openModal, closeModal } from '../actions';
-
+import { signingContent, processingContent, confirmOnCardContent } from '../ModalContents';
+import CircularProgress from '@material-ui/core/CircularProgress';
 class Modal extends Component {
 	render() {
 		const { showModal } = this.props;
-		const { image, message, title } = this.props;
+		// const { image, message, title } = this.props;
+		const { logo, message, title } = this.props.modalContent;
 		return (
 			<div>
 				<Dialog
@@ -20,14 +22,20 @@ class Modal extends Component {
 					aria-labelledby="simple-dialog-title"
 					open={showModal}
 				>
-					<DialogTitle id="simple-dialog-title">{title}</DialogTitle>
+					<DialogTitle id="simple-dialog-title">{title ? title : ''}</DialogTitle>
 					<DialogContent>
-						<Image alt="img" src={image} />
+						{logo === 'Processing' ? <CircularProgress /> : <Image alt="img" src={logo} />}
 						<DialogContentText id="alert-dialog-description">{message}</DialogContentText>
 					</DialogContent>
 				</Dialog>
-				<Button variant="outlined" color="primary" onClick={this.props.openModal}>
-					{message}
+				<Button variant="outlined" color="primary" onClick={() => this.props.openModal(signingContent)}>
+					Signing...
+				</Button>
+				<Button variant="outlined" color="primary" onClick={() => this.props.openModal(processingContent)}>
+					Processing...
+				</Button>
+				<Button variant="outlined" color="primary" onClick={() => this.props.openModal(confirmOnCardContent)}>
+					Confirm on your card
 				</Button>
 			</div>
 		);
@@ -35,7 +43,8 @@ class Modal extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	showModal: state.common.showModal
+	showModal: state.common.showModal,
+	modalContent: state.common.modalContent
 });
 
 const mapDispatchToProps = {
