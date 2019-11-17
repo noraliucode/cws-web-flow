@@ -1,25 +1,21 @@
+import { Component } from 'react'
 import { getAppKeysOrGenerate } from '../Utils/sdkUtil'
 import CoolWalletEth from '@coolwallets/eth'
-let { appPrivateKey } = getAppKeysOrGenerate()
-appPrivateKey = "8c803d11e3f2a8231d87340f20ebeadf7256835d1b94c03e566cea6cc0075838";
+import { openModal, closeModal } from '../actions';
+import { connect } from 'react-redux';
 
-export default class webPageEventHandler {
-  /**
-   *
-   * @param {BroadcastChannel} bc
-   */
-  constructor(bc) {
-    this.bc = bc
+let { appPrivateKey } = getAppKeysOrGenerate()
+appPrivateKey = '8c803d11e3f2a8231d87340f20ebeadf7256835d1b94c03e566cea6cc0075838'
+
+
+class webPageEventHandler extends Component {
+  constructor(props) {
+    super(props)
     if (window.parent === window) {
+      this.bc = new BroadcastChannel('coolwallets')
       // Tab or open directly. Listen CWS-TAB message from BroadCastChannel
       this.setUpListeners()
     }
-
-    this.transport = null
-  }
-
-  setTransport(transport) {
-    this.transport = transport
   }
 
   setUpListeners() {
@@ -29,10 +25,14 @@ export default class webPageEventHandler {
         const replyAction = `${action}-reply`
         await this.waitForConnection()
         switch (action) {
+          case 'coolwallet-connection-check':
+            this.checkConnected()
+            break;
           case 'coolwallet-unlock':
             this.unlock(replyAction, params.addrIndex)
             break
           case 'coolwallet-sign-transaction':
+            this.props.openModal()
             this.signTransaction(replyAction, params.addrIndex, params.tx, params.publicKey)
             break
           case 'coolwallet-sign-personal-message':
@@ -41,8 +41,8 @@ export default class webPageEventHandler {
           case 'coolwallet-sign-typed-data':
             this.signTypedData(replyAction, params.addrIndex, params.typedData, params.publicKey)
             break
-          default :
-            this.sendMessageToIframe(replyAction, false, {error: 'Not supported'})
+          default:
+            this.sendMessageToIframe(replyAction, false, { error: 'Not supported' })
             break
         }
       }
@@ -50,14 +50,20 @@ export default class webPageEventHandler {
   }
   async waitForConnection() {
     try {
-      while (this.transport === null) {
+      while (this.props.transport === null) {
         setTimeout(console.log('Waiting for connection'), 1000)
       }
       // const appId = localStorage.getItem('appId')
-      const appId = "f281736a18e6078624abbaa458faafc958c6dcf8"
-      this.app = new CoolWalletEth(this.transport, appPrivateKey, appId)
+      const appId = 'f281736a18e6078624abbaa458faafc958c6dcf8'
+      this.app = new CoolWalletEth(this.props.transport, appPrivateKey, appId)
     } catch (e) {
       console.log('CWS:::CONNECTION ERROR', e)
+    }
+  }
+
+  async checkConnected() {
+    if (this.props.transport !== null){
+      this.bc.postMessage({ target: 'connection-success' })
     }
   }
 
@@ -66,7 +72,7 @@ export default class webPageEventHandler {
       const res = await this.app.getPublicKey(addrIndex, true)
       this.sendMessageToIframe(replyAction, true, res)
     } catch (err) {
-      this.sendMessageToIframe(replyAction, false, {error: err.toString()})
+      this.sendMessageToIframe(replyAction, false, { error: err.toString() })
     } finally {
       this.cleanUp()
     }
@@ -76,8 +82,9 @@ export default class webPageEventHandler {
     try {
       const res = await this.app.signTransaction(tx, addrIndex, publicKey)
       this.sendMessageToIframe(replyAction, true, res)
+      this.props.closeModal()
     } catch (err) {
-      this.sendMessageToIframe(replyAction, false, {error: err.toString()})
+      this.sendMessageToIframe(replyAction, false, { error: err.toString() })
     } finally {
       this.cleanUp()
     }
@@ -88,7 +95,7 @@ export default class webPageEventHandler {
       const res = await this.app.signMessage(message, addIndex, publicKey)
       this.sendMessageToIframe(replyAction, true, res)
     } catch (err) {
-      this.sendMessageToIframe(replyAction, false, {error: err.toString()})
+      this.sendMessageToIframe(replyAction, false, { error: err.toString() })
     } finally {
       this.cleanUp()
     }
@@ -110,14 +117,27 @@ export default class webPageEventHandler {
   }
 
   /**
-   * 
-   * @param {String} action 
-   * @param {Boolean} success 
-   * @param {any} payload 
+   *
+   * @param {String} action
+   * @param {Boolean} success
+   * @param {any} payload
    */
   sendMessageToIframe(action, success, payload) {
-    this.bc.postMessage({action, success, payload})
+    this.bc.postMessage({ action, success, payload })
   }
 
-
+  render(){
+    return null
+  }
 }
+
+const mapStateToProps = (state) => ({
+	showModal: state.common.showModal
+});
+
+const mapDispatchToProps = {
+	openModal,
+	closeModal
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(webPageEventHandler);

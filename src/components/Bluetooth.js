@@ -5,7 +5,6 @@ import Button from './Button';
 export default class Bluetooth extends Component {
 	state = {
 		transport: null,
-		device: {}
 	};
 	connect = async () => {
 		WebBleTransport.listen(async (error, device) => {
@@ -14,12 +13,11 @@ export default class Bluetooth extends Component {
 				const transport = await WebBleTransport.connect(device);
 				this.setState({
 					transport,
-					device
 				});
 				// inform IFRAME ready for data
 				let bc = new BroadcastChannel('coolwallets')
 				bc.postMessage({ target: 'connection-success' })
-				this.props.webpageHandler.setTransport(transport)
+				this.props.setTransport(transport)
 				this.props.isConnected(true);
 				this.props.device(device);
 				return transport;

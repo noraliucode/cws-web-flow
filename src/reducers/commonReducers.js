@@ -11,8 +11,8 @@ const initialState = {
 };
 
 const commonReducer = (state = initialState, action) => {
-	console.log('commonReducer action.type = ', action.type);
-	console.log('commonReducer action.payload = ', action.payload);
+	// console.log('commonReducer action.type = ', action.type);
+	// console.log('commonReducer action.payload = ', action.payload);
 	switch (action.type) {
 		case types.OPEN_MODAL:
 			return {

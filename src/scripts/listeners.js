@@ -91,7 +91,7 @@ export default class CoolWalletBridge {
   async waitForConnection() {
     try {
       while (this.transport === null) {
-        setTimeout(console.log('Waiting for connection'), 1000)
+        setTimeout(console.log('3 Waiting for connection'), 1000)
       }
       const appId = localStorage.getItem('appId')
       this.app = new CoolWalletEth(this.transport, appPrivateKey, appId)

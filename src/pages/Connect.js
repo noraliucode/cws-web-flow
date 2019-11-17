@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Modal from '../components/Modal';
 import styled from 'styled-components';
 import BluetoothConnectButton from '../components/Bluetooth';
+import Iframe from '../scripts/iframeScript'
+import WebScript from '../scripts/webScript'
 
 // const styles = {
 // 	largeIcon: {
@@ -13,10 +15,11 @@ import BluetoothConnectButton from '../components/Bluetooth';
 export default class Connect extends Component {
 	state = {
 		isConnected: false,
-		device: null
+		device: null,
+		transport: null
 	};
 	render() {
-		const { isConnected, device } = this.state;
+		const { isConnected, device, transport } = this.state;
 		return (
 			<Wrapper>
 				<Title>
@@ -28,6 +31,8 @@ export default class Connect extends Component {
 						'Wallet is not connected'
 					)}
 				</Title>
+				<Iframe/>
+				<WebScript transport={transport} ></WebScript>
 				<Modal image={'contract.png'} message={'Signing...'} title={''} />
 				<IconWrapper>
 					{/* <LaptopChromebookIcon htmlColor={'#7f7f7f'} fontSize="large" />
@@ -40,7 +45,7 @@ export default class Connect extends Component {
 					<BluetoothConnectButton
 						isConnected={(isConnected) => this.setState({ isConnected })}
 						device={(device) => this.setState({ device })}
-						webpageHandler ={this.props.webpageHandler}
+						setTransport={(transport) => this.setState({ transport })}
 					/>
 				)}
 			</Wrapper>
