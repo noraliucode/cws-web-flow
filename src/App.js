@@ -12,7 +12,7 @@ function App() {
 		<Provider store={store}>
 			<Header />
 			<Container>
-				<Register2 />
+				<Connect />
 			</Container>
 		</Provider>
 	);
