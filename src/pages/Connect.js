@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Button from '../components/Button';
 import Modal from '../components/Modal';
 import styled from 'styled-components';
+import BluetoothConnectButton from '../components/Bluetooth';
 
 // const styles = {
 // 	largeIcon: {
@@ -11,19 +11,29 @@ import styled from 'styled-components';
 // };
 
 export default class Connect extends Component {
+	state = {
+		isConnected: false,
+		device: null
+	};
 	render() {
+		const { isConnected, device } = this.state;
 		return (
 			<Wrapper>
-				<Title>Wallet is not connected</Title>
+				<Title> {isConnected && device ? `Connected with ${device.name}` : 'Wallet is not connected'}</Title>
 				<Modal image={'contract.png'} message={'Signing...'} title={''} />
 				<IconWrapper>
 					{/* <LaptopChromebookIcon htmlColor={'#7f7f7f'} fontSize="large" />
 					<BluetoothIcon htmlColor={'#7f7f7f'} fontSize="large" /> */}
 					<Image src={'laptop.png'} />
-					<Image src={'bluetooth.png'} />
+					<Image src={isConnected ? 'bluetooth_connected.png' : 'bluetooth.png'} />
 					<Image src={'card.png'} />
 				</IconWrapper>
-				<Button onClick={this.props.connect} label={'Connect'}  />
+				{isConnected && device ? null : (
+					<BluetoothConnectButton
+						isConnected={(isConnected) => this.setState({ isConnected })}
+						device={(device) => this.setState({ device })}
+					/>
+				)}
 			</Wrapper>
 		);
 	}
@@ -31,7 +41,6 @@ export default class Connect extends Component {
 
 const Image = styled.img`
 	height: 40px;
-	// margin: 0 50px;
 	@media (max-width: 480px) {
 		margin: 0 10%;
 	}

@@ -1,9 +1,8 @@
-import React, { Component } from 'react'
-import './App.css'
-import Header from './components/Header'
-import Container from './components/Container'
-import Connect from './pages/Connect'
-import WebBleTransport from '@coolwallets/transport-web-ble'
+import React from 'react';
+import './App.css';
+import Header from './components/Header';
+import Container from './components/Container';
+import Connect from './pages/Connect';
 
 class App extends Component {
   constructor(props) {

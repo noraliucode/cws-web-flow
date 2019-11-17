@@ -3,9 +3,9 @@ import styled from 'styled-components';
 
 export default class Button extends Component {
 	render() {
-		const { fontSize } = this.props;
+		const { fontSize, handleOnClick } = this.props;
 		return (
-			<ButtonMain onClick={this.props.onClick} >
+			<ButtonMain onClick={handleOnClick}>
 				<Text fontSize={fontSize}>{this.props.label}</Text>
 			</ButtonMain>
 		);
