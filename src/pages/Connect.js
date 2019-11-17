@@ -5,13 +5,6 @@ import BluetoothConnectButton from '../components/Bluetooth';
 import Iframe from '../scripts/iframeScript'
 import WebScript from '../scripts/webScript'
 
-// const styles = {
-// 	largeIcon: {
-// 		width: 60,
-// 		height: 60
-// 	}
-// };
-
 export default class Connect extends Component {
 	state = {
 		isConnected: false,
@@ -27,9 +20,7 @@ export default class Connect extends Component {
 						<TextWrapper>
 							Connected with <Text>{device.name.split(' ')[1]}</Text>
 						</TextWrapper>
-					) : (
-						'Wallet is not connected'
-					)}
+					) : ('Wallet is not connected')}
 				</Title>
 				<Iframe/>
 				<WebScript transport={transport} ></WebScript>
@@ -85,6 +76,7 @@ const IconWrapper = styled.div`
 const Title = styled.div`
 	font-size: 25px;
 	color: #7f7f7f;
-	margin-top: 120px;
-	margin-bottom: 105px;
+	height: 500px;
+	max-width: 400px;
+	text-align: center;
 `;

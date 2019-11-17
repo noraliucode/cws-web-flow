@@ -3,6 +3,7 @@ import { getAppKeysOrGenerate } from '../Utils/sdkUtil'
 import CoolWalletEth from '@coolwallets/eth'
 import { openModal, closeModal } from '../actions';
 import { connect } from 'react-redux';
+import { signingContent, processingContent } from '../ModalContents';
 
 let { appPrivateKey } = getAppKeysOrGenerate()
 appPrivateKey = '8c803d11e3f2a8231d87340f20ebeadf7256835d1b94c03e566cea6cc0075838'
@@ -29,16 +30,19 @@ class webPageEventHandler extends Component {
             this.checkConnected()
             break;
           case 'coolwallet-unlock':
+            this.props.openModal(processingContent)
             this.unlock(replyAction, params.addrIndex)
             break
           case 'coolwallet-sign-transaction':
-            this.props.openModal()
+            this.props.openModal(signingContent)
             this.signTransaction(replyAction, params.addrIndex, params.tx, params.publicKey)
             break
           case 'coolwallet-sign-personal-message':
+            this.props.openModal(signingContent)
             this.signPersonalMessage(replyAction, params.addrIndex, params.message, params.publicKey)
             break
           case 'coolwallet-sign-typed-data':
+            this.props.openModal(signingContent)
             this.signTypedData(replyAction, params.addrIndex, params.typedData, params.publicKey)
             break
           default:
@@ -71,6 +75,7 @@ class webPageEventHandler extends Component {
     try {
       const res = await this.app.getPublicKey(addrIndex, true)
       this.sendMessageToIframe(replyAction, true, res)
+      this.props.closeModal(processingContent)
     } catch (err) {
       this.sendMessageToIframe(replyAction, false, { error: err.toString() })
     } finally {
@@ -82,7 +87,7 @@ class webPageEventHandler extends Component {
     try {
       const res = await this.app.signTransaction(tx, addrIndex, publicKey)
       this.sendMessageToIframe(replyAction, true, res)
-      this.props.closeModal()
+      this.props.closeModal(signingContent)
     } catch (err) {
       this.sendMessageToIframe(replyAction, false, { error: err.toString() })
     } finally {
@@ -94,6 +99,7 @@ class webPageEventHandler extends Component {
     try {
       const res = await this.app.signMessage(message, addIndex, publicKey)
       this.sendMessageToIframe(replyAction, true, res)
+      this.props.closeModal(signingContent)
     } catch (err) {
       this.sendMessageToIframe(replyAction, false, { error: err.toString() })
     } finally {
@@ -105,6 +111,7 @@ class webPageEventHandler extends Component {
     try {
       const res = await this.app.signTypedData(typedData, addrIndex, publicKey)
       this.sendMessageToIframe(replyAction, true, res)
+      this.props.closeModal(signingContent)
     } catch (err) {
       this.sendMessageToIframe(replyAction, false, { error: err.toString() })
     } finally {
