@@ -3,9 +3,9 @@ import styled from 'styled-components';
 
 export default class Button extends Component {
 	render() {
-		const { fontSize, handleOnClick } = this.props;
+		const { fontSize, handleOnClick, width } = this.props;
 		return (
-			<ButtonMain onClick={handleOnClick}>
+			<ButtonMain width={width} onClick={handleOnClick}>
 				<Text fontSize={fontSize}>{this.props.label}</Text>
 			</ButtonMain>
 		);
@@ -13,7 +13,7 @@ export default class Button extends Component {
 }
 
 const ButtonMain = styled.div`
-	width: 320px;
+	width: ${(props) => (props.width ? `${props.width}px` : '320px')};
 	max-width: 320px;
 	height: 62px;
 	border-radius: 30px;
