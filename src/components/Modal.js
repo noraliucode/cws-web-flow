@@ -5,29 +5,20 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import styled from 'styled-components';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
+import { connect } from 'react-redux';
+import { openModal, closeModal } from '../actions';
 
-export default class Modal extends Component {
-	state = {
-		visibility: false
-	};
-	handleClose = () => {
-		this.setState({ visibility: false });
-	};
-
-	open = () => {
-		this.setState({ visibility: true });
-	};
-
+class Modal extends Component {
 	render() {
-		const { visibility } = this.state;
+		const { showModal } = this.props;
 		const { image, message, title } = this.props;
 		return (
 			<div>
 				<Dialog
 					aria-describedby="alert-dialog-description"
-					onClose={this.handleClose}
+					onClose={this.props.closeModal}
 					aria-labelledby="simple-dialog-title"
-					open={visibility}
+					open={showModal}
 				>
 					<DialogTitle id="simple-dialog-title">{title}</DialogTitle>
 					<DialogContent>
@@ -35,12 +26,23 @@ export default class Modal extends Component {
 						<DialogContentText id="alert-dialog-description">{message}</DialogContentText>
 					</DialogContent>
 				</Dialog>
-				{/* <Button variant="outlined" color="primary" onClick={this.open}>
+				<Button variant="outlined" color="primary" onClick={this.props.openModal}>
 					{message}
-				</Button> */}
+				</Button>
 			</div>
 		);
 	}
 }
+
+const mapStateToProps = (state) => ({
+	showModal: state.common.showModal
+});
+
+const mapDispatchToProps = {
+	openModal,
+	closeModal
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Modal);
 
 const Image = styled.img`width: 100px;`;

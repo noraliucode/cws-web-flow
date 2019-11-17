@@ -19,7 +19,15 @@ export default class Connect extends Component {
 		const { isConnected, device } = this.state;
 		return (
 			<Wrapper>
-				<Title> {isConnected && device ? `Connected with ${device.name}` : 'Wallet is not connected'}</Title>
+				<Title>
+					{isConnected && device ? (
+						<TextWrapper>
+							Connected with <Text>{device.name.split(' ')[1]}</Text>
+						</TextWrapper>
+					) : (
+						'Wallet is not connected'
+					)}
+				</Title>
 				<Modal image={'contract.png'} message={'Signing...'} title={''} />
 				<IconWrapper>
 					{/* <LaptopChromebookIcon htmlColor={'#7f7f7f'} fontSize="large" />
@@ -39,7 +47,11 @@ export default class Connect extends Component {
 		);
 	}
 }
-
+const TextWrapper = styled.div`display: flex;`;
+const Text = styled.div`
+	color: #ffba12;
+	margin-left: 8px;
+`;
 const Image = styled.img`
 	height: 40px;
 	@media (max-width: 480px) {
