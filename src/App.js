@@ -1,16 +1,20 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './App.css';
 import Header from './components/Header';
 import Container from './components/Container';
 import Connect from './pages/Connect';
-
+import WebBleTransport from '@coolwallets/transport-web-ble'
+import IframeEventHandler from './scripts/iframe'
+import WebPageEventHandler from './scripts/webpage'
 class App extends Component {
   constructor(props) {
     super(props);
+    this.bc = new BroadcastChannel('coolwallets')
+    this.iframeHandler = new IframeEventHandler(this.bc)
+    this.webpageHandler = new WebPageEventHandler(this.bc)
+
     this.state = {
       transport: null,
-      blockOnFirstCall: true,
-      bc: new BroadcastChannel('coolwallets')
     }
   }
 
@@ -20,11 +24,9 @@ class App extends Component {
       
       const transport = await WebBleTransport.connect(device);
       this.setState({
-        transport,
-        blockOnFirstCall: true
-      });
-      this.state.bc.postMessage({ target: 'connection-success' })
-      
+        transport
+      })
+      this.bc.postMessage({ target: 'connection-success' })
     });
   }
   
