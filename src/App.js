@@ -6,17 +6,17 @@ import Header from './components/Header';
 import Container from './components/Container';
 import Connect from './pages/Connect';
 import store from './store';
-class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <Header />
-        <Container>
-          <Connect/>
-        </Container>
-      </Provider>
-    )
-  }
+// import Register2 from './pages/Register2';
+
+function App() {
+	return (
+		<Provider store={store}>
+			<Header />
+			<Container>
+				<Connect />
+			</Container>
+		</Provider>
+	);
 }
 
 export default App

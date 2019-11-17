@@ -76,7 +76,9 @@ const IconWrapper = styled.div`
 const Title = styled.div`
 	font-size: 25px;
 	color: #7f7f7f;
-	height: 500px;
+	height: 150px;
 	max-width: 400px;
-	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
