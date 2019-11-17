@@ -38,7 +38,7 @@ class Modal extends Component {
 						<DialogContentWrapper>
 							{logo === 'Processing' ? <CircularProgress /> : <Image alt="img" src={logo} />}
 						</DialogContentWrapper>
-						<DialogContentText id="alert-dialog-description" children={<TextWhite>{message}</TextWhite>} />
+						<TextWhite>{message}</TextWhite>
 					</DialogContent>
 				</Dialog>
 				<Button variant="outlined" color="primary" onClick={() => this.props.openModal(signingContent)}>
