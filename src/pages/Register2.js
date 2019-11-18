@@ -20,7 +20,8 @@ import { resetContent } from '../ModalContents';
 class Register2 extends Component {
 	state = {
 		test: [ 'My pixel3', 'Zerion' ],
-		showModal: false
+		showModal: false,
+		pairingPassword: ''
 	};
 	toggle = () => {
 		const { showModal } = this.state;
@@ -81,7 +82,7 @@ class Register2 extends Component {
 		);
 	};
 	handleOnClick = () => {
-		console.log('handleOnClick!');
+		console.log('this.state.pairingPassword!!', this.state.pairingPassword);
 	};
 	render() {
 		const { openModal } = this.props;
@@ -96,7 +97,7 @@ class Register2 extends Component {
 					<TextUnderline onClick={() => this.setState({ showModal: true })}>whitelist.</TextUnderline>
 				</InfoBox>
 				<Wrapper>
-					<PairingPasswordInput />
+					<PairingPasswordInput onChange={({ target }) => this.setState({ pairingPassword: target.value })} />
 					<Button width={200} label={'Register'} handleOnClick={this.handleOnClick} />
 				</Wrapper>
 				<Hint onClick={() => openModal(resetContent(() => console.log('reset!')))}>Lost your device?</Hint>

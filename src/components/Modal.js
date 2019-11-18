@@ -10,7 +10,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from './Button';
 
 class Modal extends Component {
-	handleOnClick = () => {};
 	render() {
 		const { showModal, closeModal } = this.props;
 		// const { image, message, title } = this.props;
