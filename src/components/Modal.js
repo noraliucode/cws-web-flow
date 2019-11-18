@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 // import DialogContentText from '@material-ui/core/DialogContentText';
 import { connect } from 'react-redux';
 import { openModal, closeModal } from '../actions';
-import { signingContent, processingContent, confirmOnCardContent } from '../ModalContents';
+// import { signingContent, processingContent, confirmOnCardContent } from '../ModalContents';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 class Modal extends Component {

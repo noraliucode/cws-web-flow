@@ -1,13 +1,12 @@
 import { Component } from 'react'
 import { getAppKeysOrGenerate } from '../Utils/sdkUtil'
 import CoolWalletEth from '@coolwallets/eth'
-import { openModal, closeModal } from '../actions';
-import { connect } from 'react-redux';
-import { signingContent, processingContent } from '../ModalContents';
+import { openModal, closeModal } from '../actions'
+import { connect } from 'react-redux'
+import { signingContent, processingContent, confirmOnCardContent } from '../ModalContents'
 
 let { appPrivateKey } = getAppKeysOrGenerate()
 appPrivateKey = '8c803d11e3f2a8231d87340f20ebeadf7256835d1b94c03e566cea6cc0075838'
-
 
 class webPageEventHandler extends Component {
   constructor(props) {
@@ -28,21 +27,21 @@ class webPageEventHandler extends Component {
         switch (action) {
           case 'coolwallet-connection-check':
             this.checkConnected()
-            break;
+            break
           case 'coolwallet-unlock':
             this.props.openModal(processingContent)
             this.unlock(replyAction, params.addrIndex)
             break
           case 'coolwallet-sign-transaction':
-            this.props.openModal(signingContent)
+            this.props.openModal(processingContent)
             this.signTransaction(replyAction, params.addrIndex, params.tx, params.publicKey)
             break
           case 'coolwallet-sign-personal-message':
-            this.props.openModal(signingContent)
+            this.props.openModal(processingContent)
             this.signPersonalMessage(replyAction, params.addrIndex, params.message, params.publicKey)
             break
           case 'coolwallet-sign-typed-data':
-            this.props.openModal(signingContent)
+            this.props.openModal(processingContent)
             this.signTypedData(replyAction, params.addrIndex, params.typedData, params.publicKey)
             break
           default:
@@ -66,7 +65,7 @@ class webPageEventHandler extends Component {
   }
 
   async checkConnected() {
-    if (this.props.transport !== null){
+    if (this.props.transport !== null) {
       this.bc.postMessage({ target: 'connection-success' })
     }
   }
@@ -85,7 +84,13 @@ class webPageEventHandler extends Component {
 
   async signTransaction(replyAction, addrIndex, tx, publicKey) {
     try {
-      const res = await this.app.signTransaction(tx, addrIndex, publicKey)
+      const res = await this.app.signTransaction(
+        tx,
+        addrIndex,
+        publicKey,
+        ()=>this.props.openModal(confirmOnCardContent),
+        ()=>this.props.openModal(signingContent)
+      )
       this.sendMessageToIframe(replyAction, true, res)
       this.props.closeModal(signingContent)
     } catch (err) {
@@ -97,7 +102,13 @@ class webPageEventHandler extends Component {
 
   async signPersonalMessage(replyAction, addIndex, message, publicKey) {
     try {
-      const res = await this.app.signMessage(message, addIndex, publicKey)
+      const res = await this.app.signMessage(
+        message,
+        addIndex,
+        publicKey,
+        ()=>this.props.openModal(confirmOnCardContent),
+        ()=>this.props.openModal(signingContent)
+      )
       this.sendMessageToIframe(replyAction, true, res)
       this.props.closeModal(signingContent)
     } catch (err) {
@@ -109,7 +120,13 @@ class webPageEventHandler extends Component {
 
   async signTypedData(replyAction, addrIndex, typedData, publicKey) {
     try {
-      const res = await this.app.signTypedData(typedData, addrIndex, publicKey)
+      const res = await this.app.signTypedData(
+        typedData,
+        addrIndex,
+        publicKey,
+        ()=>this.props.openModal(confirmOnCardContent),
+        ()=>this.props.openModal(signingContent)
+      )
       this.sendMessageToIframe(replyAction, true, res)
       this.props.closeModal(signingContent)
     } catch (err) {
@@ -133,18 +150,18 @@ class webPageEventHandler extends Component {
     this.bc.postMessage({ action, success, payload })
   }
 
-  render(){
+  render() {
     return null
   }
 }
 
-const mapStateToProps = (state) => ({
-	showModal: state.common.showModal
-});
+const mapStateToProps = state => ({
+  showModal: state.common.showModal,
+})
 
 const mapDispatchToProps = {
-	openModal,
-	closeModal
-};
+  openModal,
+  closeModal,
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(webPageEventHandler);
+export default connect(mapStateToProps, mapDispatchToProps)(webPageEventHandler)

@@ -1,5 +1,5 @@
 import * as types from '../actions/types';
-import { CommonActions } from '../actions/commonActions';
+// import { CommonActions } from '../actions/commonActions';
 
 const initialState = {
 	modalContent: {
