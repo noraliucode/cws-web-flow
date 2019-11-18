@@ -9,11 +9,17 @@ export default class Bluetooth extends Component {
 	connect = async () => {
 		WebBleTransport.listen(async (error, device) => {
 			if (device) {
-				console.log('device', device);
+        console.log('device', device);
 				const transport = await WebBleTransport.connect(device);
 				this.setState({
 					transport,
-				});
+        });
+        // disconnect listener
+        device.addEventListener('gattserverdisconnected', () => {
+        	this.props.isConnected(false)
+          this.setState({ transport: null })
+        })
+
 				// inform IFRAME ready for data
 				let bc = new BroadcastChannel('coolwallets')
 				bc.postMessage({ target: 'connection-success' })
@@ -29,6 +35,7 @@ export default class Bluetooth extends Component {
 	disconnect = () => {
 		const { transport } = this.state;
 		WebBleTransport.disconnect(transport.device.id);
+		this.props.isConnected(false);
 		this.setState({
 			transport: null
 		});
