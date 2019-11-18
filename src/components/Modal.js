@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Dialog from '@material-ui/core/Dialog';
-import Button from '@material-ui/core/Button';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import styled from 'styled-components';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -8,17 +7,19 @@ import { connect } from 'react-redux';
 import { openModal, closeModal } from '../actions';
 import { signingContent, processingContent, confirmOnCardContent } from '../ModalContents';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Button from './Button';
 
 class Modal extends Component {
+	handleOnClick = () => {};
 	render() {
-		const { showModal } = this.props;
+		const { showModal, closeModal } = this.props;
 		// const { image, message, title } = this.props;
-		const { logo, message, title } = this.props.modalContent;
+		const { logo, message, title, action } = this.props.modalContent;
 		return (
 			<div>
 				<Dialog
 					aria-describedby="alert-dialog-description"
-					onClose={this.props.closeModal}
+					onClose={closeModal}
 					aria-labelledby="simple-dialog-title"
 					open={showModal}
 					fullWidth={true}
@@ -35,10 +36,20 @@ class Modal extends Component {
 					<DialogTitle id="simple-dialog-title">{title ? title : ''}</DialogTitle>
 					<DialogContent>
 						<DialogContentWrapper>
-							{logo === 'Processing' ? <CircularProgress /> : <Image alt="img" src={logo} />}
+							{logo === 'Processing' ? (
+								<CircularProgress />
+							) : logo ? (
+								<Image alt="img" src={logo} />
+							) : null}
 						</DialogContentWrapper>
 						<TextWhite>{message}</TextWhite>
 					</DialogContent>
+					<ActionWrapper>
+						{action ? <Button width={100} label={action.okText} handleOnClick={action.okCallback} /> : null}
+						{action && action.CancelText ? (
+							<Button width={100} label={action.CancelText} handleOnClick={closeModal} />
+						) : null}
+					</ActionWrapper>
 				</Dialog>
 				{/* <Button variant="outlined" color="primary" onClick={() => this.props.openModal(signingContent)}>
 					Signing...
@@ -78,3 +89,4 @@ const DialogContentWrapper = styled.div`
 	display: flex;
 	justify-content: center;
 `;
+const ActionWrapper = styled.div`display: flex;`;

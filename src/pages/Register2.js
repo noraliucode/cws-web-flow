@@ -99,7 +99,7 @@ class Register2 extends Component {
 					<PairingPasswordInput />
 					<Button width={200} label={'Register'} handleOnClick={this.handleOnClick} />
 				</Wrapper>
-				<Hint onClick={() => openModal(resetContent)}>Lost your device?</Hint>
+				<Hint onClick={() => openModal(resetContent(() => console.log('reset!')))}>Lost your device?</Hint>
 			</div>
 		);
 	}
