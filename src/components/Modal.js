@@ -4,7 +4,6 @@ import Button from '@material-ui/core/Button';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import styled from 'styled-components';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import { connect } from 'react-redux';
 import { openModal, closeModal } from '../actions';
 import { signingContent, processingContent, confirmOnCardContent } from '../ModalContents';
@@ -41,7 +40,7 @@ class Modal extends Component {
 						<TextWhite>{message}</TextWhite>
 					</DialogContent>
 				</Dialog>
-				<Button variant="outlined" color="primary" onClick={() => this.props.openModal(signingContent)}>
+				{/* <Button variant="outlined" color="primary" onClick={() => this.props.openModal(signingContent)}>
 					Signing...
 				</Button>
 				<Button variant="outlined" color="primary" onClick={() => this.props.openModal(processingContent)}>
@@ -49,7 +48,7 @@ class Modal extends Component {
 				</Button>
 				<Button variant="outlined" color="primary" onClick={() => this.props.openModal(confirmOnCardContent)}>
 					Confirm on your card
-				</Button>
+				</Button> */}
 			</div>
 		);
 	}

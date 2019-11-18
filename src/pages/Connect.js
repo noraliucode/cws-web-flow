@@ -23,7 +23,7 @@ export default class Connect extends Component {
 						'Wallet is not connected'
 					)}
 				</Title>
-				<Modal image={'contract.png'} message={'Signing...'} title={''} />
+				{/* <Modal image={'contract.png'} message={'Signing...'} title={''} /> */}
 				<IconWrapper>
 					{/* <LaptopChromebookIcon htmlColor={'#7f7f7f'} fontSize="large" />
 					<BluetoothIcon htmlColor={'#7f7f7f'} fontSize="large" /> */}
