@@ -12,3 +12,14 @@ export const confirmOnCardContent = {
 	logo: 'card.png',
 	message: 'Confirm on your card'
 };
+
+export const resetContent = (callback) => ({
+	title: 'Lost your device?',
+	logo: '',
+	message: 'Would you like to reset your wallet?',
+	action: {
+		okCallback: callback,
+		okText: 'Reset',
+		CancelText: 'Cancel'
+	}
+});
