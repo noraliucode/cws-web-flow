@@ -20,5 +20,10 @@ export const getAppIdOrNull = () => {
   if(appId === null) {
     console.log('No Appid stored, please register!')
   }
+  console.log(`got key ${appId}`)
   return appId
+}
+
+export const setAppId = (appId) => {
+  localStorage.setItem('appId', appId)
 }

@@ -17,6 +17,9 @@ import PhoneAndroidIcon from '@material-ui/icons/PhoneAndroid';
 // import { withStyles } from '@material-ui/core/styles';
 import { resetContent } from '../ModalContents';
 
+import CWSWallet from '@coolwallets/wallet'
+import { getAppKeysOrGenerate, setAppId } from '../Utils/sdkUtil'
+
 class Register2 extends Component {
 	state = {
 		test: [ 'My pixel3', 'Zerion' ],
@@ -81,8 +84,13 @@ class Register2 extends Component {
 			</Dialog>
 		);
 	};
-	handleOnClick = () => {
+	handleOnClick = async () => {
 		console.log('this.state.pairingPassword!!', this.state.pairingPassword);
+		const { appPublicKey, appPrivateKey }  = getAppKeysOrGenerate()
+		const transport = this.props.location.transport
+		const wallet = new CWSWallet(transport, appPrivateKey)
+		const appId = await wallet.register(appPublicKey, this.state.pairingPassword, 'CoolWalletConnect')
+		setAppId(appId)
 	};
 	render() {
 		const { openModal } = this.props;
