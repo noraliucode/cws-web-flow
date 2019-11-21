@@ -1,5 +1,5 @@
 import * as types from '../actions/types';
-import { CommonActions } from '../actions/commonActions';
+// import { CommonActions } from '../actions/commonActions';
 
 const initialState = {
 	modalContent: {
@@ -11,8 +11,8 @@ const initialState = {
 };
 
 const commonReducer = (state = initialState, action) => {
-	console.log('commonReducer action.type = ', action.type);
-	console.log('commonReducer action.payload = ', action.payload);
+	// console.log('commonReducer action.type = ', action.type);
+	// console.log('commonReducer action.payload = ', action.payload);
 	switch (action.type) {
 		case types.OPEN_MODAL:
 			return {

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import DialogContent from '@material-ui/core/DialogContent';
 import { connect } from 'react-redux';
 import { openModal, closeModal } from '../actions';
-import { signingContent, processingContent, confirmOnCardContent } from '../ModalContents';
+// import { signingContent, processingContent, confirmOnCardContent } from '../ModalContents';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from './Button';
 

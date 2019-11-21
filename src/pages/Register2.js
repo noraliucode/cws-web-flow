@@ -12,9 +12,9 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import ListItemText from '@material-ui/core/ListItemText';
 import PhoneAndroidIcon from '@material-ui/icons/PhoneAndroid';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import { withStyles } from '@material-ui/core/styles';
+// import IconButton from '@material-ui/core/IconButton';
+// import CloseIcon from '@material-ui/icons/Close';
+// import { withStyles } from '@material-ui/core/styles';
 import { resetContent } from '../ModalContents';
 
 class Register2 extends Component {
@@ -97,7 +97,7 @@ class Register2 extends Component {
 					<TextUnderline onClick={() => this.setState({ showModal: true })}>whitelist.</TextUnderline>
 				</InfoBox>
 				<Wrapper>
-					<PairingPasswordInput onChange={({ target }) => this.setState({ pairingPassword: target.value })} />
+					<PairingPasswordInput style={{ color :"white"}}  onChange={({ target }) => this.setState({ pairingPassword: target.value })} />
 					<Button width={200} label={'Register'} handleOnClick={this.handleOnClick} />
 				</Wrapper>
 				<Hint onClick={() => openModal(resetContent(() => console.log('reset!')))}>Lost your device?</Hint>
