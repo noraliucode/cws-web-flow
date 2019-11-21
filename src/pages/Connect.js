@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import Modal from '../components/Modal';
 import styled from 'styled-components';
 import BluetoothConnectButton from '../components/Bluetooth';
-import Iframe from '../scripts/iframeScript'
-import WebScript from '../scripts/webScript'
+import Iframe from '../scripts/iframeScript';
+import WebScript from '../scripts/webScript';
+import { Button } from '@material-ui/core';
+import { NavLink } from 'react-router-dom';
+import { confirmOnCardContent } from '../ModalContents';
 
 export default class Connect extends Component {
 	state = {
@@ -20,10 +23,12 @@ export default class Connect extends Component {
 						<TextWrapper>
 							Connected with <Text>{device.name.split(' ')[1]}</Text>
 						</TextWrapper>
-					) : ('Wallet is not connected')}
+					) : (
+						'Wallet is not connected'
+					)}
 				</Title>
-				<Iframe/>
-				<WebScript transport={transport} ></WebScript>
+				<Iframe />
+				<WebScript transport={transport} />
 				<Modal image={'contract.png'} message={'Signing...'} title={''} />
 				<IconWrapper>
 					{/* <LaptopChromebookIcon htmlColor={'#7f7f7f'} fontSize="large" />
@@ -32,6 +37,9 @@ export default class Connect extends Component {
 					<Image src={isConnected ? 'bluetooth_connected.png' : 'bluetooth.png'} />
 					<Image src={'card.png'} />
 				</IconWrapper>
+				<Button variant="outlined" color="primary">
+					<NavLink to="/register2">To register page</NavLink>
+				</Button>{' '}
 				{isConnected && device ? null : (
 					<BluetoothConnectButton
 						isConnected={(isConnected) => this.setState({ isConnected })}
