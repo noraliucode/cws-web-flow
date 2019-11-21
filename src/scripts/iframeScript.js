@@ -11,8 +11,8 @@ export default class IframeComponent extends Component {
   }
 
   setupListeners() {
-    // const tabDomain = 'https://coolwallets-connect.herokuapp.com/'
-    const tabDomain = 'http://localhost:3000'
+    const tabDomain = 'https://coolwallets-connect.herokuapp.com/'
+    // const tabDomain = 'http://localhost:3000'
 
     // Open as IFRAME
     onmessage = async ({ data, source, origin }) => {
