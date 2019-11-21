@@ -6,7 +6,7 @@ import Header from './components/Header';
 import Container from './components/Container';
 import Connect from './pages/Connect';
 import store from './store';
-import Register2 from './pages/Register2';
+// import Register2 from './pages/Register2';
 import Modal from './components/Modal';
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
 			<Header />
 			<Modal />
 			<Container>
-				<Register2 />
+				{/* <Register2 /> */}
 				<Connect />
 			</Container>
 		</Provider>

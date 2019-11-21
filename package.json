@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@coolwallets/eth": "^0.1.7",
-    "@coolwallets/transport-web-ble": "0.0.16",
+    "@coolwallets/transport-web-ble": "0.0.18",
     "@coolwallets/wallet": "0.0.1-beta",
     "@material-ui/core": "^4.6.1",
     "@material-ui/icons": "^4.5.1",
