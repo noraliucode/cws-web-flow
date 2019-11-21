@@ -6,8 +6,6 @@ import { connect } from 'react-redux'
 import { signingContent, processingContent, confirmOnCardContent } from '../ModalContents'
 
 let { appPrivateKey } = getAppKeysOrGenerate()
-console.log(`got app PrivKey ${appPrivateKey}`)
-// appPrivateKey = '8c803d11e3f2a8231d87340f20ebeadf7256835d1b94c03e566cea6cc0075838'
 
 class webPageEventHandler extends Component {
   constructor(props) {
@@ -58,7 +56,6 @@ class webPageEventHandler extends Component {
         setTimeout(console.log('Waiting for connection'), 1000)
       }
       const appId = getAppIdOrNull()
-      // const appId = 'f281736a18e6078624abbaa458faafc958c6dcf8'
       this.app = new CoolWalletEth(this.props.transport, appPrivateKey, appId)
     } catch (e) {
       console.log('CWS:::CONNECTION ERROR', e)

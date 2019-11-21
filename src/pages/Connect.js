@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import BluetoothConnectButton from '../components/Bluetooth';
 import Iframe from '../scripts/iframeScript';
 import WebScript from '../scripts/webScript';
-import { Button } from '@material-ui/core';
+// import { Button } from '@material-ui/core';
 // import { NavLink } from 'react-router-dom';
 // import { confirmOnCardContent } from '../ModalContents';
 
