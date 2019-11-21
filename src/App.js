@@ -20,8 +20,6 @@ function App() {
 					<Container>
 						<Route exact path="/" component={Connect} />
 						<Route path="/register2" component={Register2} />
-						{/* <Register2 /> */}
-						{/* <Connect /> */}
 					</Container>
 				</Provider>
 			</Switch>

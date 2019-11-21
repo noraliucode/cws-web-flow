@@ -37,8 +37,18 @@ export default class Connect extends Component {
 					<Image src={isConnected ? 'bluetooth_connected.png' : 'bluetooth.png'} />
 					<Image src={'card.png'} />
 				</IconWrapper>
-				<Button variant="outlined" color="primary">
-					<NavLink to="/register2">To register page</NavLink>
+				<Button
+					variant="outlined"
+					color="primary"
+					onClick={() => {
+						this.props.history.push({
+							pathname: '/register2',
+							device
+						});
+					}}
+				>
+					To register page
+					{/* <NavLink to="/register2">To register page</NavLink> */}
 				</Button>{' '}
 				{isConnected && device ? null : (
 					<BluetoothConnectButton

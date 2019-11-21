@@ -5,7 +5,8 @@ const initialState = {
 	modalContent: {
 		logo: '',
 		title: '',
-		message: ''
+		message: '',
+		transport: null
 	},
 	showModal: false
 };
@@ -24,6 +25,11 @@ const commonReducer = (state = initialState, action) => {
 			return {
 				...state,
 				showModal: false
+			};
+		case types.NAVIGATE_TO_REIGSTER2:
+			return {
+				...state,
+				transport: action.payload
 			};
 		default:
 			return state;

@@ -86,6 +86,7 @@ class Register2 extends Component {
 	};
 	render() {
 		const { openModal } = this.props;
+		console.log('this.props.location', this.props.location);
 		return (
 			<div>
 				{this.whitelist()}
@@ -97,7 +98,10 @@ class Register2 extends Component {
 					<TextUnderline onClick={() => this.setState({ showModal: true })}>whitelist.</TextUnderline>
 				</InfoBox>
 				<Wrapper>
-					<PairingPasswordInput style={{ color :"white"}}  onChange={({ target }) => this.setState({ pairingPassword: target.value })} />
+					<PairingPasswordInput
+						style={{ color: 'white' }}
+						onChange={({ target }) => this.setState({ pairingPassword: target.value })}
+					/>
 					<Button width={200} label={'Register'} handleOnClick={this.handleOnClick} />
 				</Wrapper>
 				<Hint onClick={() => openModal(resetContent(() => console.log('reset!')))}>Lost your device?</Hint>
