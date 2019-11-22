@@ -7,6 +7,7 @@ import Container from './components/Container';
 import Connect from './pages/Connect';
 import store from './store';
 import Register2 from './pages/Register2';
+import IframeScript from './scripts/iframeScript'
 import Modal from './components/Modal';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
 					<Container>
 						<Route exact path="/" component={Connect} />
 						<Route path="/register2" component={Register2} />
+						<Route path="/iframe" component={IframeScript} />
 					</Container>
 				</Provider>
 			</Switch>
