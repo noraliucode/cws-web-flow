@@ -53,7 +53,7 @@ class webPageEventHandler extends Component {
   async waitForConnection() {
     try {
       while (this.props.transport === null) {
-        setTimeout(console.log('Waiting for connection'), 1000)
+        await this.sleep(1000)
       }
       const appId = getAppIdOrNull()
       this.app = new CoolWalletEth(this.props.transport, appPrivateKey, appId)
@@ -150,6 +150,10 @@ class webPageEventHandler extends Component {
 
   render() {
     return null
+  }
+
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms))
   }
 }
 
