@@ -18,6 +18,10 @@ class webPageEventHandler extends Component {
   }
 
   setUpListeners() {
+    window.onbeforeunload = () => {
+      this.bc.postMessage({ target: 'connection-status', connected: false })
+    }
+    
     this.bc.onmessage = async ({ data }) => {
       if (data && data.target === 'CWS-TAB') {
         const { action, params } = data
@@ -64,7 +68,7 @@ class webPageEventHandler extends Component {
 
   async checkConnected() {
     if (this.props.transport !== null) {
-      this.bc.postMessage({ target: 'connection-success' })
+      this.bc.postMessage({ target: 'connection-status', connected: true })
     }
   }
 

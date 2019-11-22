@@ -53,6 +53,7 @@ export default class Connect extends Component {
 					    history={this.props.history}
 						isConnected={(isConnected) => this.setState({ isConnected })}
 						device={(device) => this.setState({ device })}
+						transport={transport}
 						setTransport={(transport) => this.setState({ transport })}
 					/>
 				)}

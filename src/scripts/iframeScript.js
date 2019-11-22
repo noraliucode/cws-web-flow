@@ -11,14 +11,18 @@ export default class IframeComponent extends Component {
   }
 
   setupListeners() {
-    const tabDomain = 'https://coolwallets-connect.herokuapp.com/'
-    // const tabDomain = 'http://localhost:3000'
+    // const tabDomain = 'https://coolwallets-connect.herokuapp.com/'
+    const tabDomain = 'http://localhost:3000'
 
     // Open as IFRAME
     onmessage = async ({ data, source, origin }) => {
       if (data.target === 'CWS-IFRAME' && source === window.parent) {
         // Open CoolWalletConnect in new tab.
-        this.openOnce(tabDomain, 'coolwallets-tab')
+        const tab = this.openOnce(tabDomain, 'coolwallets-tab')
+        
+        tab.onbeforeunload = ()=>{
+          this.tabConnected = false
+        }
 
         if (!this.tabConnected) this.pingTab()
         while (!this.tabConnected) {
@@ -32,8 +36,8 @@ export default class IframeComponent extends Component {
     }
 
     this.bc.onmessage = ({ data, source }) => {
-      if (data.target === 'connection-success' ) {
-        this.tabConnected = true
+      if (data.target === 'connection-status' ) {
+        this.tabConnected = data.connected
       } else {
         this.sendMessageToExtension(data)
       }
@@ -54,7 +58,7 @@ export default class IframeComponent extends Component {
     // if the "target" window was just opened, change its url
     if (winref.location.href === 'about:blank') {
       winref.location.href = url
-    }
+    } 
     return winref
   }
 
