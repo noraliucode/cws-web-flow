@@ -22,7 +22,7 @@ import { getAppKeysOrGenerate, setAppId } from '../Utils/sdkUtil'
 
 class Register2 extends Component {
 	state = {
-		test: [ 'My pixel3', 'Zerion' ],
+		test: [ 'CoolBitX Crypto (Android)', 'Zerion' ],
 		showModal: false,
 		pairingPassword: ''
 	};
@@ -71,19 +71,16 @@ class Register2 extends Component {
 						<CloseIcon />
 					</IconButton> */}
 				</DialogTitle>
-				<List>
+				{/* <List>
 					{test.map((x, index) => (
 						<ListItem button onClick={() => console.log('device', x)} key={index}>
 							<ListItemAvatar>
-								{/* <Avatar className={classes.avatar}> */}
-								{/* <PersonIcon />
-								</Avatar> */}
 								<PhoneAndroidIcon />
 							</ListItemAvatar>
 							<ListItemText primary={x} />
 						</ListItem>
 					))}
-				</List>
+				</List> */}
 			</Dialog>
 		);
 	};
