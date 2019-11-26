@@ -23,7 +23,7 @@ export default class Settings extends Component {
 					style={{ margin: 20 }}
 					variant="outline-light"
 					onClick={() => {
-						this.props.wallet.register(this.props.appPublicKey, '2799548', 'myChromeExt').then((appId) => {
+						this.props.wallet.register(this.props.appPublicKey, '2799548', 'CoolWalletS Bridge').then((appId) => {
 							localStorage.setItem('appId', appId);
 							this.props.wallet.setAppId(appId);
 							console.log(`Store AppId complete! ${appId}`);

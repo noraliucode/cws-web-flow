@@ -26,19 +26,22 @@ class Register2 extends Component {
 		showModal: false,
 		pairingPassword: ''
 	};
+
+	constructor(props) {
+		super(props)
+		const { appPrivateKey }  = getAppKeysOrGenerate()
+		const transport = this.props.location.transport
+		const wallet = new CWSWallet(transport, appPrivateKey)
+		this.state.wallet = wallet
+		console.log(`construct register`, wallet)
+	}
+
+	
 	toggle = () => {
 		const { showModal } = this.state;
 		this.setState({ showModal: !showModal });
 	};
 	whitelist = () => {
-		// const classes = {
-		// 	closeButton: {
-		// 		position: 'absolute',
-		// 		right: '10px',
-		// 		top: '10px',
-		// 		color: BROWN_GREY
-		// 	}
-		// };
 		const { test, showModal } = this.state;
 		return (
 			<Dialog
@@ -86,10 +89,10 @@ class Register2 extends Component {
 	};
 	handleOnClick = async () => {
 		console.log('this.state.pairingPassword!!', this.state.pairingPassword);
-		const { appPublicKey, appPrivateKey }  = getAppKeysOrGenerate()
-		const transport = this.props.location.transport
-		const wallet = new CWSWallet(transport, appPrivateKey)
-		const appId = await wallet.register(appPublicKey, this.state.pairingPassword, 'CoolWalletConnect')
+		const { appPublicKey }  = getAppKeysOrGenerate()
+		// const transport = this.props.location.transport
+		// this.state.wallet = new CWSWallet(transport, appPrivateKey)
+		const appId = await this.state.wallet.register(appPublicKey, this.state.pairingPassword, 'CoolWalletConnect')
 		setAppId(appId)
 	};
 	render() {
@@ -112,7 +115,7 @@ class Register2 extends Component {
 					/>
 					<Button width={200} label={'Register'} handleOnClick={this.handleOnClick} />
 				</Wrapper>
-				<Hint onClick={() => openModal(resetContent(() => console.log('reset!')))}>Lost your device?</Hint>
+				<Hint onClick={() => openModal(resetContent(() => this.state.wallet.resetCard()))}>Lost your device?</Hint>
 			</div>
 		);
 	}

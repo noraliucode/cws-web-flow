@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import WebBleTransport from '@coolwallets/transport-web-ble';
+import CoolWallet from '@coolwallets/wallet'
 import Button from './Button';
 
-import { getAppIdOrNull } from '../Utils/sdkUtil'
+import { getAppIdOrNull, getAppKeysOrGenerate } from '../Utils/sdkUtil'
 
 export default class Bluetooth extends Component {
 	state = {
