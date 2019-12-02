@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { ORANGEY_YELLOW, DARK_GREY, GREYISH_BROWN } from '../constant';
 
 export default class Button extends Component {
 	render() {
-		const { fontSize, handleOnClick, width } = this.props;
+		const { fontSize, handleOnClick, width, buttonStyle } = this.props;
 		return (
-			<ButtonMain width={width} onClick={handleOnClick}>
+			<ButtonMain buttonStyle={buttonStyle} width={width} onClick={handleOnClick}>
 				<Text fontSize={fontSize}>{this.props.label}</Text>
 			</ButtonMain>
 		);
@@ -19,13 +20,13 @@ const ButtonMain = styled.div`
 	max-width: ${(props) => (props.width ? `${props.width}px` : '320px')};
 	height: 55px;
 	border-radius: 30px;
-	border: solid 1px #ffba12;
+	border: ${(props) => (props.buttonStyle === 'gray' ? 'none' : 'solid 1px #ffba12')};
 	background-color: #212529;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
-	color: #ffba12;
+	color: ${(props) => (props.buttonStyle === 'gray' ? GREYISH_BROWN : ORANGEY_YELLOW)};
 	&:hover {
 		border-color: #f09307;
 	}
