@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { ORANGEY_YELLOW, DARK_GREY, GREYISH_BROWN } from '../constant';
+import { ORANGEY_YELLOW, GREYISH_BROWN } from '../constant';
 
 export default class Button extends Component {
 	render() {
