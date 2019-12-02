@@ -13,9 +13,11 @@ export default class Button extends Component {
 }
 
 const ButtonMain = styled.div`
-	width: ${(props) => (props.width ? `${props.width}px` : '320px')};
-	max-width: 320px;
-	height: 62px;
+	box-sizing: border-box;
+	margin: 0px 10px;
+	width: 100%;
+	max-width: ${(props) => (props.width ? `${props.width}px` : '320px')};
+	height: 55px;
 	border-radius: 30px;
 	border: solid 1px #ffba12;
 	background-color: #212529;
