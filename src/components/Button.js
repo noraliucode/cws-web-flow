@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { ORANGEY_YELLOW, GREYISH_BROWN } from '../constant';
+import { ORANGEY_YELLOW, GREYISH_BROWN, BROWN_GREY, DARK_GREY } from '../constant';
 
 export default class Button extends Component {
 	render() {
@@ -29,6 +29,8 @@ const ButtonMain = styled.div`
 	color: ${(props) => (props.buttonStyle === 'gray' ? GREYISH_BROWN : ORANGEY_YELLOW)};
 	&:hover {
 		border-color: #f09307;
+		background-color: ${(props) => (props.buttonStyle === 'gray' ? DARK_GREY : '#212529')};
+		color: ${(props) => (props.buttonStyle === 'gray' ? BROWN_GREY : ORANGEY_YELLOW)};
 	}
 	@media (max-width: 480px) {
 		width: 100%;
