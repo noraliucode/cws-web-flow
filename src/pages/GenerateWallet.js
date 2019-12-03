@@ -10,7 +10,7 @@ class GenerateWallet extends Component {
 	state = {
 		active: '2',
 		seedLength: 12,
-		step: 1,
+		step: 3,
 		sum: 0
 	};
 	handleOnClick = () => {
@@ -23,10 +23,11 @@ class GenerateWallet extends Component {
 		this.setState({ step: 3 });
 	};
 	step3 = () => {
+		const { closeModal } = this.props;
 		try {
 			throw new Error();
 		} catch (error) {
-			this.props.openModal(checkSumFail);
+			this.props.openModal(checkSumFail(closeModal));
 		}
 		console.log('check sum...', this.state.sum);
 	};
