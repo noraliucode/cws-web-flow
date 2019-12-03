@@ -30,6 +30,5 @@ export const checkSumFail = (callback) => ({
 	action: {
 		okCallback: callback,
 		okText: 'ok'
-		// CancelText: 'Cancel'
 	}
 });

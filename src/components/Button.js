@@ -4,9 +4,9 @@ import { ORANGEY_YELLOW, GREYISH_BROWN, BROWN_GREY, DARK_GREY } from '../constan
 
 export default class Button extends Component {
 	render() {
-		const { fontSize, handleOnClick, width, buttonStyle } = this.props;
+		const { fontSize, handleOnClick, width, theme } = this.props;
 		return (
-			<ButtonMain buttonStyle={buttonStyle} width={width} onClick={handleOnClick}>
+			<ButtonMain theme={theme} width={width} onClick={handleOnClick}>
 				<Text fontSize={fontSize}>{this.props.label}</Text>
 			</ButtonMain>
 		);
@@ -30,29 +30,26 @@ const ButtonBase = styled.div`
 
 const ButtonMain = styled(ButtonBase)`
 	max-width: ${(props) => (props.width ? `${props.width}px` : '320px')};
-	border: ${(props) => (props.buttonStyle === 'gray' ? 'none' : 'solid 1px #ffba12')};
-	background-color: ${(props) => (props.buttonStyle === 'lightgray' ? BROWN_GREY : '#212529')};
-	color: ${(props) => (props.buttonStyle === 'gray' ? GREYISH_BROWN : ORANGEY_YELLOW)};
+	border: ${(props) => (props.theme.button.borderColor ? `solid 1px ${props.theme.button.borderColor}` : 'none')};
+	background-color: ${(props) => props.theme.button.background};
+	color: ${(props) => props.theme.button.color};
 	&:hover {
 		border-color: #f09307;
-		background-color: ${(props) => (props.buttonStyle === 'gray' ? DARK_GREY : '#212529')};
-		color: ${(props) => (props.buttonStyle === 'gray' ? BROWN_GREY : ORANGEY_YELLOW)};
+		background-color: ${(props) => props.theme.button.hoverBackground};
+		color: ${(props) => props.theme.button.hoverColor};
 	}
 `;
 
-// const theme = {
-// 	main: 'mediumseagreen'
-// };
+ButtonMain.defaultProps = {
+	theme: {
+		button: {
+			borderColor: ORANGEY_YELLOW,
+			background: '#212529',
+			color: ORANGEY_YELLOW,
+			hoverBackground: '#212529',
+			hoverColor: ORANGEY_YELLOW
+		}
+	}
+};
 
-// const ButtonMain = styled(ButtonBase)`
-// 	max-width: 320px;
-// 	border: ${(props) => `solid 1px ${props.theme.main}`};
-// 	background-color: ${(props) => props.theme.main};
-// 	color: ${(props) => props.theme.main};
-// 	&:hover {
-// 		border-color: #f09307;
-// 		background-color: ${(props) => props.theme.main};
-// 		color: ${(props) => props.theme.main};
-// 	}
-// `;
 const Text = styled.div`font-size: ${(props) => (props.fontSize ? props.fontSize : '16px')};`;

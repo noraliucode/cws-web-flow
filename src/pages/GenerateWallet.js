@@ -6,6 +6,16 @@ import Button from '../components/Button';
 import { checkSumFail } from '../ModalContents';
 import { connect } from 'react-redux';
 import { openModal, closeModal } from '../actions';
+
+const themeDarkGray = {
+	button: {
+		background: '#212529',
+		color: GREYISH_BROWN,
+		hoverBackground: DARK_GREY,
+		hoverColor: BROWN_GREY
+	}
+};
+
 class GenerateWallet extends Component {
 	state = {
 		active: '2',
@@ -50,7 +60,7 @@ class GenerateWallet extends Component {
 							))}
 						</SeedLengthWrapper>
 						<Text2>length of seed</Text2>
-						<Button buttonStyle={'gray'} label={'Generate'} handleOnClick={this.step1} />
+						<Button theme={themeDarkGray} label={'Generate'} handleOnClick={this.step1} />
 					</Fragment>
 				);
 			case 2:
@@ -58,7 +68,7 @@ class GenerateWallet extends Component {
 					<Fragment>
 						<Image src={'card.png'} />
 						<Text2>Please look on your card and write down your seed.</Text2>
-						<Button buttonStyle={'gray'} label={'I’ve written my seed!'} handleOnClick={this.step2} />
+						<Button theme={themeDarkGray} label={'I’ve written my seed!'} handleOnClick={this.step2} />
 					</Fragment>
 				);
 			case 3:
@@ -69,7 +79,7 @@ class GenerateWallet extends Component {
 							placeholder={'Your Answer'}
 						/>
 						<Text2>Sum up ALL the numbers of you seed</Text2>
-						<Button buttonStyle={'gray'} label={'Confirm'} handleOnClick={this.step3} />
+						<Button theme={themeDarkGray} label={'Confirm'} handleOnClick={this.step3} />
 					</Fragment>
 				);
 			default:
@@ -97,7 +107,7 @@ class GenerateWallet extends Component {
 					<Fragment>
 						<Text>Disconnect from the Internet if you want to be absolutely safe on this step</Text>
 						<InfoBox placeholder={'Your seed here'} />
-						<Button buttonStyle={'gray'} label={'Confirm'} handleOnClick={this.handleOnClick} />
+						<Button theme={themeDarkGray} label={'Confirm'} handleOnClick={this.handleOnClick} />
 					</Fragment>
 				) : (
 					this.generateSteps()
