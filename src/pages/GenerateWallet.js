@@ -3,14 +3,15 @@ import styled from 'styled-components';
 import { BROWN_GREY, DARK_GREY, ORANGEY_YELLOW, DARK_GREY2, GREYISH_BROWN } from '../constant';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import Button from '../components/Button';
-
-// style={seedLength === x ? selectedText : text}
-
-export default class GenerateWallet extends Component {
+import { checkSumFail } from '../ModalContents';
+import { connect } from 'react-redux';
+import { openModal, closeModal } from '../actions';
+class GenerateWallet extends Component {
 	state = {
 		active: '2',
 		seedLength: 12,
-		step: 3
+		step: 1,
+		sum: 0
 	};
 	handleOnClick = () => {
 		console.log('confirm your seed!!');
@@ -22,7 +23,12 @@ export default class GenerateWallet extends Component {
 		this.setState({ step: 3 });
 	};
 	step3 = () => {
-		console.log('check sum...');
+		try {
+			throw new Error();
+		} catch (error) {
+			this.props.openModal(checkSumFail);
+		}
+		console.log('check sum...', this.state.sum);
 	};
 	generateSteps = () => {
 		const { step, seedLength } = this.state;
@@ -57,7 +63,10 @@ export default class GenerateWallet extends Component {
 			case 3:
 				return (
 					<Fragment>
-						<Input placeholder={'Your Answer'} />
+						<Input
+							onChange={({ target }) => this.setState({ sum: target.value })}
+							placeholder={'Your Answer'}
+						/>
 						<Text2>Sum up ALL the numbers of you seed</Text2>
 						<Button buttonStyle={'gray'} label={'Confirm'} handleOnClick={this.step3} />
 					</Fragment>
@@ -96,6 +105,18 @@ export default class GenerateWallet extends Component {
 		);
 	}
 }
+
+const mapStateToProps = (state) => ({
+	modalContent: state.common.modalContent
+});
+
+const mapDispatchToProps = {
+	openModal,
+	closeModal
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(GenerateWallet);
+
 const Input = styled.input`
 	width: 200px;
 	height: 50px;

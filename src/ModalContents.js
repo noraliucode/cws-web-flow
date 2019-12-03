@@ -23,3 +23,11 @@ export const resetContent = (callback) => ({
 		CancelText: 'Cancel'
 	}
 });
+
+export const checkSumFail = {
+	logo: '',
+	message: 'Check sum fail, please check your seed and try again',
+	action: {
+		CancelText: 'ok'
+	}
+};

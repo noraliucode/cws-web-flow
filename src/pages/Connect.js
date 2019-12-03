@@ -5,8 +5,8 @@ import BluetoothConnectButton from '../components/Bluetooth';
 import Iframe from '../scripts/iframeScript';
 import WebScript from '../scripts/webScript';
 import { Button } from '@material-ui/core';
-import { NavLink } from 'react-router-dom';
-import { confirmOnCardContent } from '../ModalContents';
+// import { NavLink } from 'react-router-dom';
+// import { confirmOnCardContent } from '../ModalContents';
 
 export default class Connect extends Component {
 	state = {
