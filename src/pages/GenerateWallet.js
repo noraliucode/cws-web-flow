@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
-import { BROWN_GREY, DARK_GREY, ORANGEY_YELLOW, DARK_GREY2 } from '../constant';
+import { BROWN_GREY, DARK_GREY, ORANGEY_YELLOW, DARK_GREY2, GREYISH_BROWN } from '../constant';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import Button from '../components/Button';
 
@@ -9,35 +9,64 @@ import Button from '../components/Button';
 export default class GenerateWallet extends Component {
 	state = {
 		active: '2',
-		seedLength: 12
+		seedLength: 12,
+		step: 3
 	};
 	handleOnClick = () => {
 		console.log('confirm your seed!!');
 	};
-	generateSeed = () => {
-		console.log('generateSeed seed!!');
+	step1 = () => {
+		this.setState({ step: 2 });
 	};
-	generateSeedComponent = () => {
-		const { seedLength } = this.state;
-		return (
-			<Fragment>
-				<SeedLengthWrapper>
-					{[ 12, 18, 24 ].map((x, i) => (
-						<LengthButton
-							key={i}
-							onClick={() => {
-								this.setState({ seedLength: x });
-							}}
-						>
-							<SeedLength active={!!(seedLength === x)}>{x}</SeedLength>
-						</LengthButton>
-					))}
-				</SeedLengthWrapper>
-				<Text2>length of seed</Text2>
-				<Button buttonStyle={'gray'} label={'Generate'} handleOnClick={this.generateSeed} />
-			</Fragment>
-		);
+	step2 = () => {
+		this.setState({ step: 3 });
 	};
+	step3 = () => {
+		console.log('check sum...');
+	};
+	generateSteps = () => {
+		const { step, seedLength } = this.state;
+		switch (step) {
+			case 1:
+				return (
+					<Fragment>
+						<SeedLengthWrapper>
+							{[ 12, 18, 24 ].map((x, i) => (
+								<LengthButton
+									key={i}
+									onClick={() => {
+										this.setState({ seedLength: x });
+									}}
+								>
+									<SeedLength active={!!(seedLength === x)}>{x}</SeedLength>
+								</LengthButton>
+							))}
+						</SeedLengthWrapper>
+						<Text2>length of seed</Text2>
+						<Button buttonStyle={'gray'} label={'Generate'} handleOnClick={this.step1} />
+					</Fragment>
+				);
+			case 2:
+				return (
+					<Fragment>
+						<Image src={'card.png'} />
+						<Text2>Please look on your card and write down your seed.</Text2>
+						<Button buttonStyle={'gray'} label={'I’ve written my seed!'} handleOnClick={this.step2} />
+					</Fragment>
+				);
+			case 3:
+				return (
+					<Fragment>
+						<Input placeholder={'Your Answer'} />
+						<Text2>Sum up ALL the numbers of you seed</Text2>
+						<Button buttonStyle={'gray'} label={'Confirm'} handleOnClick={this.step3} />
+					</Fragment>
+				);
+			default:
+				return;
+		}
+	};
+
 	render() {
 		const { active } = this.state;
 		return (
@@ -61,12 +90,29 @@ export default class GenerateWallet extends Component {
 						<Button buttonStyle={'gray'} label={'Confirm'} handleOnClick={this.handleOnClick} />
 					</Fragment>
 				) : (
-					this.generateSeedComponent()
+					this.generateSteps()
 				)}
 			</Container>
 		);
 	}
 }
+const Input = styled.input`
+	width: 200px;
+	height: 50px;
+	border-radius: 38px;
+	background-color: ${DARK_GREY2};
+	font-size: 20px;
+	color: white;
+	border: none;
+	text-align: center;
+	::placeholder {
+		color: ${GREYISH_BROWN};
+	}
+	&:focus {
+		outline: none;
+	}
+`;
+const Image = styled.img`height: 40px;`;
 const Text = styled.div`
 	width: 270px;
 	height: 41px;
