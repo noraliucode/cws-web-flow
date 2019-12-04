@@ -1,6 +1,19 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
-import { BROWN_GREY, DARK_GREY, ORANGEY_YELLOW, DARK_GREY2, GREYISH_BROWN } from '../constant';
+import {
+	BROWN_GREY,
+	DARK_GREY,
+	ORANGEY_YELLOW,
+	DARK_GREY2,
+	GREYISH_BROWN,
+	LIGHT_YELLOW,
+	DARK_GREY3,
+	LARGE,
+	MEDIUM,
+	HUGE,
+	EXTRA_LARGE,
+	SMALL
+} from '../constant';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import Button from '../components/Button';
 import { checkSumFail } from '../ModalContents';
@@ -133,7 +146,7 @@ const Input = styled.input`
 	height: 50px;
 	border-radius: 38px;
 	background-color: ${DARK_GREY2};
-	font-size: 20px;
+	font-size: ${LARGE};
 	color: white;
 	border: none;
 	text-align: center;
@@ -153,17 +166,16 @@ const Text = styled.div`
 	max-width: 520px;
 	width: 80%;
 	height: 41px;
-	font-size: 18px;
+	font-size: ${MEDIUM};
 	color: #7f7f7f;
 	margin: 20px;
 	height: 82px;
-	font-size: 18px;
 	color: ${BROWN_GREY};
 	display: flex;
 	align-items: center;
 `;
 const SeedLength = styled.div`
-	font-size: ${(props) => (props.active ? '35px' : '25px')};
+	font-size: ${(props) => (props.active ? HUGE : EXTRA_LARGE)};
 	color: ${(props) => (props.active ? 'white' : '#6d7278')};
 	justify-content: center;
 	display: flex;
@@ -190,12 +202,18 @@ const NavigationButton = styled.div`
 	width: 288px;
 	height: 54px;
 	border-radius: 27px;
-	background-color: ${(props) => (props.active ? DARK_GREY2 : DARK_GREY)};
-	color: ${(props) => (props.active ? ORANGEY_YELLOW : BROWN_GREY)};
+	background-color: ${(props) => (props.active ? DARK_GREY3 : DARK_GREY)};
+	color: ${(props) => (props.active ? LIGHT_YELLOW : BROWN_GREY)};
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
+	border: ${(props) => props.active && 'solid 1px rgb(51, 51, 51)'};
+	box-shadow: ${(props) => props.active && 'rgba(0, 0, 0, 0.05) 0px 4px 8px 0px'};
+	&:hover {
+		color: ${ORANGEY_YELLOW};
+		background-color: ${(props) => (props.active ? DARK_GREY2 : DARK_GREY)};
+	}
 `;
 
 const NavigationBar = styled.div`
@@ -205,6 +223,7 @@ const NavigationBar = styled.div`
 	border-radius: 27px;
 	background-color: ${DARK_GREY};
 	display: flex;
+	box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 8px 0px;
 `;
 
 const InfoBox = styled.textarea`
@@ -212,21 +231,23 @@ const InfoBox = styled.textarea`
 	height: 140px;
 	width: 100%;
 	border-radius: 5px;
-	border: none;
+	border: solid 1px rgb(51, 51, 51);
 	background-color: #202124;
 	line-height: 1.64;
-	color: ${BROWN_GREY};
+	color: white;
 	padding: 20px;
 	box-sizing: border-box;
 	border-radius: 23px;
 	resize: none;
 	margin-bottom: 40px;
+	box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 8px 0px;
 	&:focus {
 		outline: none;
+		border: solid 1px ${ORANGEY_YELLOW};
 	}
 	::placeholder {
-		color: #4c4c4c;
-		font-size: 16px;
+		color: ${GREYISH_BROWN};
+		font-size: ${SMALL};
 	}
 `;
 const Container = styled.div`
@@ -238,13 +259,13 @@ const Container = styled.div`
 `;
 const Text2 = styled.div`
 	height: 82px;
-	font-size: 14px;
+	font-size: ${SMALL};
 	line-height: 1.64;
 	color: ${BROWN_GREY};
 `;
 const Title = styled.div`
-margin: 30px
-	font-size: 25px;
+	margin: 30px
+	font-size: ${EXTRA_LARGE};
 	color: #7f7f7f;
 	display: flex;
 	justify-content: center;

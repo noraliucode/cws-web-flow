@@ -3,7 +3,8 @@ import Modal from '../components/Modal';
 import styled from 'styled-components';
 import BluetoothConnectButton from '../components/Bluetooth';
 import WebScript from '../scripts/webScript';
-// import { Button } from '@material-ui/core';
+import { Button } from '@material-ui/core';
+import { EXTRA_LARGE } from '../constant';
 // import { NavLink } from 'react-router-dom';
 // import { confirmOnCardContent } from '../ModalContents';
 
@@ -92,7 +93,7 @@ const IconWrapper = styled.div`
 	}
 `;
 const Title = styled.div`
-	font-size: 25px;
+	font-size: ${EXTRA_LARGE};
 	color: #7f7f7f;
 	height: 150px;
 	max-width: 400px;

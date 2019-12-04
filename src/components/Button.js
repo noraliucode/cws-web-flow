@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { ORANGEY_YELLOW } from '../constant';
+import { ORANGEY_YELLOW, SMALL } from '../constant';
 
 export default class Button extends Component {
 	render() {
@@ -23,6 +23,7 @@ const ButtonBase = styled.div`
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
+	transition: background-color color 1s ease-in-out;
 	@media (max-width: 480px) {
 		width: 100%;
 	}
@@ -52,4 +53,4 @@ ButtonMain.defaultProps = {
 	}
 };
 
-const Text = styled.div`font-size: ${(props) => (props.fontSize ? props.fontSize : '16px')};`;
+const Text = styled.div`font-size: ${(props) => (props.fontSize ? props.fontSize : SMALL)};`;

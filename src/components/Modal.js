@@ -8,7 +8,7 @@ import { openModal, closeModal } from '../actions';
 // import { signingContent, processingContent, confirmOnCardContent } from '../ModalContents';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from './Button';
-import { BROWN_GREY, GREYISH_BROWN, DARK_GREY } from '../constant';
+import { BROWN_GREY, GREYISH_BROWN, DARK_GREY, LARGE } from '../constant';
 
 const themeLightGray = {
 	button: {
@@ -97,7 +97,7 @@ const TextWhite = styled.div`
 	display: flex;
 	justify-content: center;
 	margin: 50px 0;
-	font-size: 20px;
+	font-size: ${LARGE};
 `;
 const DialogContentWrapper = styled.div`
 	display: flex;
