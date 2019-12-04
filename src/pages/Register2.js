@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BROWN_GREY, ORANGEY_YELLOW } from '../constant';
+import { BROWN_GREY, ORANGEY_YELLOW, EXTRA_LARGE, MEDIUM, SMALL } from '../constant';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import styled from 'styled-components';
 import Button from '../components/Button';
@@ -136,7 +136,7 @@ const TextUnderline = styled.div`
 	cursor: pointer;
 `;
 const Title = styled.div`
-	font-size: 25px;
+	font-size: ${EXTRA_LARGE};
 	color: ${BROWN_GREY};
 	display: flex;
 	align-items: center;
@@ -176,13 +176,13 @@ const PairingPasswordInput = styled.input`
 	}
 	::placeholder {
 		color: #4c4c4c;
-		font-size: 16px;
+		font-size: ${SMALL};
 	}
 `;
 const Hint = styled.div`
 	width: 212px;
 	height: 21px;
-	font-size: 18px;
+	font-size: ${MEDIUM};
 	text-align: center;
 	color: ${BROWN_GREY};
 	text-decoration: underline;
