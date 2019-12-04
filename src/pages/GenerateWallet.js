@@ -101,20 +101,28 @@ class GenerateWallet extends Component {
 	};
 
 	render() {
-		const { active } = this.state;
+		const { active, step } = this.state;
 		return (
 			<Container>
 				<Title>
 					<AccountBalanceWalletIcon htmlColor={BROWN_GREY} fontSize="large" />Wallet is empty
 				</Title>
-				<NavigationBar>
-					<NavigationButton onClick={() => this.setState({ active: '1' })} active={active === '1' && true}>
-						Input existing seed
-					</NavigationButton>
-					<NavigationButton onClick={() => this.setState({ active: '2' })} active={active === '2' && true}>
-						Generate seed
-					</NavigationButton>
-				</NavigationBar>
+				{step === 1 && (
+					<NavigationBar>
+						<NavigationButton
+							onClick={() => this.setState({ active: '1' })}
+							active={active === '1' && true}
+						>
+							Input existing seed
+						</NavigationButton>
+						<NavigationButton
+							onClick={() => this.setState({ active: '2' })}
+							active={active === '2' && true}
+						>
+							Generate seed
+						</NavigationButton>
+					</NavigationBar>
+				)}
 
 				{active === '1' ? (
 					<Fragment>
