@@ -8,8 +8,7 @@ import Container from './components/Container';
 import Connect from './pages/Connect';
 import store from './store';
 import Register2 from './pages/Register2';
-import IframeScript from './scripts/iframeScript'
-import Register1 from './pages/Register1';
+import IframeScript from './scripts/iframeScript';
 import Modal from './components/Modal';
 import GenerateWallet from './pages/GenerateWallet';
 
@@ -24,7 +23,6 @@ function App() {
 						<Route exact path="/" component={Connect} />
 						<Route path="/iframe" component={IframeScript} />
 						<Route path="/register2" component={Register2} />
-						<Route path="/register1" component={Register1} />
 						<Route path="/generateWallet" component={GenerateWallet} />
 					</Container>
 				</Provider>
