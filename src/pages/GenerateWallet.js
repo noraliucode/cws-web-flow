@@ -18,9 +18,9 @@ const themeDarkGray = {
 
 class GenerateWallet extends Component {
 	state = {
-		active: '2',
+		active: '1',
 		seedLength: 12,
-		step: 3,
+		step: 1,
 		sum: 0
 	};
 	handleOnClick = () => {
@@ -137,6 +137,7 @@ const Input = styled.input`
 	color: white;
 	border: none;
 	text-align: center;
+	margin: 75px 0 10px 0;
 	::placeholder {
 		color: ${GREYISH_BROWN};
 	}
@@ -144,12 +145,22 @@ const Input = styled.input`
 		outline: none;
 	}
 `;
-const Image = styled.img`height: 40px;`;
+const Image = styled.img`
+	height: 40px;
+	margin: 50px;
+`;
 const Text = styled.div`
-	width: 270px;
+	max-width: 520px;
+	width: 80%;
 	height: 41px;
 	font-size: 18px;
+	color: #7f7f7f;
+	margin: 20px;
+	height: 82px;
+	font-size: 18px;
 	color: ${BROWN_GREY};
+	display: flex;
+	align-items: center;
 `;
 const SeedLength = styled.div`
 	font-size: ${(props) => (props.active ? '35px' : '25px')};
@@ -188,7 +199,8 @@ const NavigationButton = styled.div`
 `;
 
 const NavigationBar = styled.div`
-	width: 588px;
+	width: 100%;
+	max-width: 577px;
 	height: 54px;
 	border-radius: 27px;
 	background-color: ${DARK_GREY};
@@ -196,16 +208,22 @@ const NavigationBar = styled.div`
 `;
 
 const InfoBox = styled.textarea`
+	max-width: 577px;
 	height: 140px;
 	width: 100%;
 	border-radius: 5px;
-	border: solid 1px ${BROWN_GREY};
+	border: none;
 	background-color: #202124;
 	line-height: 1.64;
 	color: ${BROWN_GREY};
 	padding: 20px;
 	box-sizing: border-box;
 	border-radius: 23px;
+	resize: none;
+	margin-bottom: 40px;
+	&:focus {
+		outline: none;
+	}
 	::placeholder {
 		color: #4c4c4c;
 		font-size: 16px;
@@ -220,16 +238,17 @@ const Container = styled.div`
 `;
 const Text2 = styled.div`
 	height: 82px;
-	font-size: 18px;
+	font-size: 14px;
 	line-height: 1.64;
 	color: ${BROWN_GREY};
 `;
 const Title = styled.div`
+margin: 30px
 	font-size: 25px;
 	color: #7f7f7f;
-	height: 150px;
-	max-width: 400px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	justify-content: space-between;
+	width: 230px;
 `;

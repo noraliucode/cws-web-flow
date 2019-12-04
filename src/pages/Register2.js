@@ -99,7 +99,7 @@ class Register2 extends Component {
 				</InfoBox>
 				<Wrapper>
 					<PairingPasswordInput
-					  placeholder={'Pairing Password'}
+						placeholder={'Pairing Password'}
 						style={{ color: 'white' }}
 						onChange={({ target }) => this.setState({ pairingPassword: target.value })}
 					/>
@@ -140,10 +140,10 @@ const Title = styled.div`
 	color: ${BROWN_GREY};
 	display: flex;
 	align-items: center;
-	justify-content: space-between;;
+	justify-content: space-between;
 	margin-bottom: 30px;
 	width: 265px;
-  display: flex;
+	display: flex;
 `;
 const InfoBox = styled.div`
 	height: 300px;
@@ -160,6 +160,7 @@ const Wrapper = styled.div`
 	margin: 50px;
 	display: flex;
 	width: 100%;
+	justify-content: space-between;
 `;
 const PairingPasswordInput = styled.input`
 	width: 100%;

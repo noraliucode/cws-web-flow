@@ -54,10 +54,10 @@ class Modal extends Component {
 						<TextWhite>{message}</TextWhite>
 					</DialogContent>
 					<ActionWrapper>
-						{action ? <Button width={100} label={action.okText} handleOnClick={action.okCallback} /> : null}
+						{action ? <Button width={150} label={action.okText} handleOnClick={action.okCallback} /> : null}
 						{action && action.CancelText ? (
 							<Button
-								width={100}
+								width={150}
 								label={action.CancelText}
 								handleOnClick={closeModal}
 								theme={themeLightGray}
@@ -106,5 +106,5 @@ const DialogContentWrapper = styled.div`
 const ActionWrapper = styled.div`
 	display: flex;
 	margin-bottom: 30px;
-	justify-content: center;
+	justify-content: space-around;
 `;

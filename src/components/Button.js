@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { ORANGEY_YELLOW, GREYISH_BROWN, BROWN_GREY, DARK_GREY } from '../constant';
+import { ORANGEY_YELLOW } from '../constant';
 
 export default class Button extends Component {
 	render() {
@@ -15,7 +15,7 @@ export default class Button extends Component {
 
 const ButtonBase = styled.div`
 	box-sizing: border-box;
-	margin: 0px 10px;
+	margin: 0px 10px 10px 0;
 	width: 100%;
 	height: 55px;
 	border-radius: 30px;
