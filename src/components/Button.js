@@ -23,7 +23,8 @@ const ButtonBase = styled.div`
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
-	transition: background-color color 1s ease-in-out;
+	transition: background-color 0.3s ease-in-out;
+	transition-property: background-color, color;
 	@media (max-width: 480px) {
 		width: 100%;
 	}
