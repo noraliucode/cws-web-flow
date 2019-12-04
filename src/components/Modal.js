@@ -8,6 +8,16 @@ import { openModal, closeModal } from '../actions';
 // import { signingContent, processingContent, confirmOnCardContent } from '../ModalContents';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from './Button';
+import { BROWN_GREY, GREYISH_BROWN, DARK_GREY } from '../constant';
+
+const themeLightGray = {
+	button: {
+		background: BROWN_GREY,
+		color: GREYISH_BROWN,
+		hoverBackground: DARK_GREY,
+		hoverColor: BROWN_GREY
+	}
+};
 
 class Modal extends Component {
 	render() {
@@ -44,9 +54,14 @@ class Modal extends Component {
 						<TextWhite>{message}</TextWhite>
 					</DialogContent>
 					<ActionWrapper>
-						{action ? <Button width={100} label={action.okText} handleOnClick={action.okCallback} /> : null}
+						{action ? <Button width={150} label={action.okText} handleOnClick={action.okCallback} /> : null}
 						{action && action.CancelText ? (
-							<Button width={100} label={action.CancelText} handleOnClick={closeModal} />
+							<Button
+								width={150}
+								label={action.CancelText}
+								handleOnClick={closeModal}
+								theme={themeLightGray}
+							/>
 						) : null}
 					</ActionWrapper>
 				</Dialog>
@@ -88,4 +103,8 @@ const DialogContentWrapper = styled.div`
 	display: flex;
 	justify-content: center;
 `;
-const ActionWrapper = styled.div`display: flex;`;
+const ActionWrapper = styled.div`
+	display: flex;
+	margin-bottom: 30px;
+	justify-content: space-around;
+`;

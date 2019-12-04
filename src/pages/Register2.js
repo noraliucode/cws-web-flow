@@ -6,12 +6,12 @@ import Button from '../components/Button';
 import { connect } from 'react-redux';
 import { openModal, closeModal } from '../actions';
 import Dialog from '@material-ui/core/Dialog';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+// import List from '@material-ui/core/List';
+// import ListItem from '@material-ui/core/ListItem';
+// import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import ListItemText from '@material-ui/core/ListItemText';
-import PhoneAndroidIcon from '@material-ui/icons/PhoneAndroid';
+// import ListItemText from '@material-ui/core/ListItemText';
+// import PhoneAndroidIcon from '@material-ui/icons/PhoneAndroid';
 // import IconButton from '@material-ui/core/IconButton';
 // import CloseIcon from '@material-ui/icons/Close';
 // import { withStyles } from '@material-ui/core/styles';
@@ -96,7 +96,7 @@ class Register2 extends Component {
 		const { openModal } = this.props;
 		console.log('this.props.location', this.props.location);
 		return (
-			<div>
+			<Container>
 				{this.whitelist()}
 				<Title>
 					<AccountBalanceWalletIcon htmlColor={ORANGEY_YELLOW} fontSize="large" />Wallet is registered
@@ -107,13 +107,14 @@ class Register2 extends Component {
 				</InfoBox>
 				<Wrapper>
 					<PairingPasswordInput
+						placeholder={'Pairing Password'}
 						style={{ color: 'white' }}
 						onChange={({ target }) => this.setState({ pairingPassword: target.value })}
 					/>
 					<Button width={200} label={'Register'} handleOnClick={this.handleOnClick} />
 				</Wrapper>
 				<Hint onClick={() => openModal(resetContent(() => this.state.wallet.resetCard()))}>Lost your device?</Hint>
-			</div>
+			</Container>
 		);
 	}
 }
@@ -130,6 +131,14 @@ const mapDispatchToProps = {
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register2);
 
+const Container = styled.div`
+	max-width: 604px;
+	width: 90%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+`;
+
 const TextUnderline = styled.div`
 	text-decoration: underline;
 	cursor: pointer;
@@ -139,11 +148,14 @@ const Title = styled.div`
 	color: ${BROWN_GREY};
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
+	margin-bottom: 30px;
+	width: 265px;
+	display: flex;
 `;
 const InfoBox = styled.div`
-	width: 604px;
-	height: 298px;
+	height: 300px;
+	width: 100%;
 	border-radius: 5px;
 	border: solid 1px ${BROWN_GREY};
 	background-color: #202124;
@@ -152,10 +164,16 @@ const InfoBox = styled.div`
 	padding: 20px;
 	box-sizing: border-box;
 `;
-const Wrapper = styled.div`display: flex;`;
+const Wrapper = styled.div`
+	margin: 50px;
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+`;
 const PairingPasswordInput = styled.input`
-	width: 371px;
-	height: 54px;
+	width: 100%;
+	max-width: 371px;
+	height: 55px;
 	border-radius: 27px;
 	background-color: #212529;
 	border: 0;
@@ -163,6 +181,10 @@ const PairingPasswordInput = styled.input`
 	box-sizing: border-box;
 	&:focus {
 		outline: none;
+	}
+	::placeholder {
+		color: #4c4c4c;
+		font-size: 16px;
 	}
 `;
 const Hint = styled.div`
