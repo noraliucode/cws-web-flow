@@ -57,31 +57,39 @@ class Register2 extends Component {
 		);
 	};
 	handleOnClick = async () => {
+		const { walletCreated } = this.props.history.location;
 		console.log('this.state.pairingPassword!!', this.state.pairingPassword);
+		console.log('this.props.history', this.props.history);
+		console.log('walletCreated', walletCreated);
 		const { appPublicKey } = getAppKeysOrGenerate();
 		// const transport = this.props.location.transport
 		// this.state.wallet = new CWSWallet(transport, appPrivateKey)
 		try {
+			// this.props.history.push('/generateWallet');
 			const appId = await this.state.wallet.register(
 				appPublicKey,
 				this.state.pairingPassword,
 				'CoolWalletConnect'
 			);
-			setAppId(appId);
+			await setAppId(appId);
+			if (!walletCreated) {
+				console.log('walletCreated!!', walletCreated);
+				this.props.history.push({
+					pathname: '/generateWallet'
+				});
+			}
 		} catch (error) {
 			console.log(error);
 		}
 	};
 	renderConditionalComponent = (comp1, comp2) => {
 		const { paired } = this.props.history.location;
-		console.log('paired', paired);
 		return paired ? comp1 : comp2;
 	};
 	render() {
 		const { openModal } = this.props;
-		const { paired } = this.props.history.location;
-		console.log('this.props.location', this.props.location);
-		console.log('this.props.history', this.props.history);
+		// console.log('this.props.location', this.props.location);
+		// console.log('this.props.history', this.props.history);
 		return (
 			<Container>
 				{this.whitelist()}
