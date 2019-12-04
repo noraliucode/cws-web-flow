@@ -6,36 +6,42 @@ import Button from '../components/Button';
 import { connect } from 'react-redux';
 import { openModal, closeModal } from '../actions';
 import Dialog from '@material-ui/core/Dialog';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+// import List from '@material-ui/core/List';
+// import ListItem from '@material-ui/core/ListItem';
+// import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import ListItemText from '@material-ui/core/ListItemText';
-import PhoneAndroidIcon from '@material-ui/icons/PhoneAndroid';
+// import ListItemText from '@material-ui/core/ListItemText';
+// import PhoneAndroidIcon from '@material-ui/icons/PhoneAndroid';
 // import IconButton from '@material-ui/core/IconButton';
 // import CloseIcon from '@material-ui/icons/Close';
 // import { withStyles } from '@material-ui/core/styles';
 import { resetContent } from '../ModalContents';
 
+import CWSWallet from '@coolwallets/wallet'
+import { getAppKeysOrGenerate, setAppId } from '../Utils/sdkUtil'
+
 class Register2 extends Component {
 	state = {
-		test: [ 'My pixel3', 'Zerion' ],
+		test: [ 'CoolBitX Crypto (Android)', 'Zerion' ],
 		showModal: false,
 		pairingPassword: ''
 	};
+
+	constructor(props) {
+		super(props)
+		const { appPrivateKey }  = getAppKeysOrGenerate()
+		const transport = this.props.location.transport
+		const wallet = new CWSWallet(transport, appPrivateKey)
+		this.state.wallet = wallet
+		console.log(`construct register`, wallet)
+	}
+
+	
 	toggle = () => {
 		const { showModal } = this.state;
 		this.setState({ showModal: !showModal });
 	};
 	whitelist = () => {
-		// const classes = {
-		// 	closeButton: {
-		// 		position: 'absolute',
-		// 		right: '10px',
-		// 		top: '10px',
-		// 		color: BROWN_GREY
-		// 	}
-		// };
 		const { test, showModal } = this.state;
 		return (
 			<Dialog
@@ -65,24 +71,26 @@ class Register2 extends Component {
 						<CloseIcon />
 					</IconButton> */}
 				</DialogTitle>
-				<List>
+				{/* <List>
 					{test.map((x, index) => (
 						<ListItem button onClick={() => console.log('device', x)} key={index}>
 							<ListItemAvatar>
-								{/* <Avatar className={classes.avatar}> */}
-								{/* <PersonIcon />
-								</Avatar> */}
 								<PhoneAndroidIcon />
 							</ListItemAvatar>
 							<ListItemText primary={x} />
 						</ListItem>
 					))}
-				</List>
+				</List> */}
 			</Dialog>
 		);
 	};
-	handleOnClick = () => {
+	handleOnClick = async () => {
 		console.log('this.state.pairingPassword!!', this.state.pairingPassword);
+		const { appPublicKey }  = getAppKeysOrGenerate()
+		// const transport = this.props.location.transport
+		// this.state.wallet = new CWSWallet(transport, appPrivateKey)
+		const appId = await this.state.wallet.register(appPublicKey, this.state.pairingPassword, 'CoolWalletConnect')
+		setAppId(appId)
 	};
 	render() {
 		const { openModal } = this.props;
@@ -105,7 +113,7 @@ class Register2 extends Component {
 					/>
 					<Button width={200} label={'Register'} handleOnClick={this.handleOnClick} />
 				</Wrapper>
-				<Hint onClick={() => openModal(resetContent(() => console.log('reset!')))}>Lost your device?</Hint>
+				<Hint onClick={() => openModal(resetContent(() => this.state.wallet.resetCard()))}>Lost your device?</Hint>
 			</Container>
 		);
 	}

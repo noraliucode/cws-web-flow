@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@coolwallets/eth": "^0.1.7",
+    "@coolwallets/eth": "^0.1.8",
     "@coolwallets/transport-web-ble": "0.0.18",
-    "@coolwallets/wallet": "0.0.1-beta",
+    "@coolwallets/wallet": "0.0.4",
     "@material-ui/core": "^4.6.1",
     "@material-ui/icons": "^4.5.1",
     "express": "^4.17.1",

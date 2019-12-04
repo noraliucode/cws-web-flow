@@ -4,7 +4,6 @@ export const getAppKeysOrGenerate = () => {
   let appPublicKey = localStorage.getItem('appPublicKey')
   let appPrivateKey = localStorage.getItem('appPrivateKey')
   if (appPublicKey !== null && appPrivateKey !== null) {
-      console.log(`Got Keys from localStorage!`)
       return { appPublicKey, appPrivateKey }
     }
 
@@ -20,5 +19,10 @@ export const getAppIdOrNull = () => {
   if(appId === null) {
     console.log('No Appid stored, please register!')
   }
+  console.log(`got appId ${appId}`)
   return appId
+}
+
+export const setAppId = (appId) => {
+  localStorage.setItem('appId', appId)
 }

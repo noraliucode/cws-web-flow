@@ -1,12 +1,11 @@
 import { Component } from 'react'
-import { getAppKeysOrGenerate } from '../Utils/sdkUtil'
+import { getAppKeysOrGenerate, getAppIdOrNull } from '../Utils/sdkUtil'
 import CoolWalletEth from '@coolwallets/eth'
 import { openModal, closeModal } from '../actions'
 import { connect } from 'react-redux'
 import { signingContent, processingContent, confirmOnCardContent } from '../ModalContents'
 
 let { appPrivateKey } = getAppKeysOrGenerate()
-appPrivateKey = '8c803d11e3f2a8231d87340f20ebeadf7256835d1b94c03e566cea6cc0075838'
 
 class webPageEventHandler extends Component {
   constructor(props) {
@@ -19,6 +18,10 @@ class webPageEventHandler extends Component {
   }
 
   setUpListeners() {
+    window.onbeforeunload = () => {
+      this.bc.postMessage({ target: 'connection-status', connected: false })
+    }
+    
     this.bc.onmessage = async ({ data }) => {
       if (data && data.target === 'CWS-TAB') {
         const { action, params } = data
@@ -54,10 +57,9 @@ class webPageEventHandler extends Component {
   async waitForConnection() {
     try {
       while (this.props.transport === null) {
-        setTimeout(console.log('Waiting for connection'), 1000)
+        await this.sleep(1000)
       }
-      // const appId = localStorage.getItem('appId')
-      const appId = 'f281736a18e6078624abbaa458faafc958c6dcf8'
+      const appId = getAppIdOrNull()
       this.app = new CoolWalletEth(this.props.transport, appPrivateKey, appId)
     } catch (e) {
       console.log('CWS:::CONNECTION ERROR', e)
@@ -66,7 +68,7 @@ class webPageEventHandler extends Component {
 
   async checkConnected() {
     if (this.props.transport !== null) {
-      this.bc.postMessage({ target: 'connection-success' })
+      this.bc.postMessage({ target: 'connection-status', connected: true })
     }
   }
 
@@ -152,6 +154,10 @@ class webPageEventHandler extends Component {
 
   render() {
     return null
+  }
+
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms))
   }
 }
 
