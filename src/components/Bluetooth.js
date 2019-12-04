@@ -34,32 +34,54 @@ export default class Bluetooth extends Component {
         // Go to regsiter page if no appId found.
         let appId = getAppIdOrNull()
         const { appPrivateKey } = getAppKeysOrGenerate()
+        
+        // sdk
         const wallet = new CoolWallet(transport, appPrivateKey, appId)
 
         if (appId !== null) {
+          
           // Has local appId
-          const isRegistered = await wallet.checkRegistered()
-          if (isRegistered) return transport
-          // Card has been reset / Different card
-          console.log(`card reset/ different card`)
-          appId = null
+          const isRegistered = await wallet.checkRegistered() //
+
+          //
+          if (isRegistered) { // return transport // 有沒有錢包
+            const { walletCreated } = await wallet.getCardInfo() 
+            if (walletCreated) 
+            {
+              return transport
+            } else {
+              // 進去 createWallet
+              this.props.history.push({
+                pathname: '/generateWallet',
+                walletCreated, // register2 最後會用到
+              })
+            }
+          }
+          else {
+            // 有存Appid 但是卡片不認得，所以無效
+            console.log(`card reset/ different card`)
+            appId = null
+          }          
         }
 
         if (appId === null) {
           // Has no appId. Must go to register page
-          const { paired, walletCreated } = await wallet.getCardInfo()
+          const { paired, walletCreated } = await wallet.getCardInfo() 
+          // walletCreated 已經有錢包
+          // paired 跟其他APP配對過
           if (paired) {
             // Device already paired with other Apps, go to register 2
             this.props.history.push({
               pathname: '/register2',
-              walletCreated,
+              walletCreated, // register2 最後會用到
               device,
               transport,
             })
           } else {
             // Device has no pairing record (like a New Card!!!). Go to register 1
+            // register 1 結束一定要 進 建立錢包
             this.props.history.push({
-              pathname: '/register',
+              pathname: '/register1',
               device,
               transport,
             })
