@@ -6,24 +6,10 @@ import WebScript from '../scripts/webScript';
 import { Button } from '@material-ui/core';
 import { EXTRA_LARGE } from '../constant';
 import { connect } from 'react-redux';
-// import { NavLink } from 'react-router-dom';
-// import { confirmOnCardContent } from '../ModalContents';
 
 class Connect extends Component {
-	// state = {
-	// 	isConnected: false,
-	// 	// device: null,
-	// 	transport: null
-	// };
 	render() {
-		// const { isConnected, transport } = this.state;
 		const { device, isConnected, transport } = this.props;
-		// console.log('this.state.device', this.state.device);
-		// const device = this.state.device || this.props.history.location.device;
-		// console.log('this.props.history', this.props.history);
-		// console.log('device connect', device);
-		// console.log('isConnected', isConnected);
-		// console.log('transport', transport);
 		return (
 			<Wrapper>
 				<Title>
@@ -38,34 +24,11 @@ class Connect extends Component {
 				<WebScript transport={transport} />
 				<Modal image={'contract.png'} message={'Signing...'} title={''} />
 				<IconWrapper>
-					{/* <LaptopChromebookIcon htmlColor={'#7f7f7f'} fontSize="large" />
-					<BluetoothIcon htmlColor={'#7f7f7f'} fontSize="large" /> */}
 					<Image src={'laptop.png'} />
 					<Image src={isConnected ? 'bluetooth_connected.png' : 'bluetooth.png'} />
 					<Image src={'card.png'} />
 				</IconWrapper>
-				{/* <Button
-					variant="outlined"
-					color="primary"
-					onClick={() => {
-						this.props.history.push({
-							pathname: '/register2',
-							device,
-							transport
-						});
-					}}
-				>
-					To register page
-				</Button>{' '} */}
-				{isConnected && device ? null : (
-					<BluetoothConnectButton
-						history={this.props.history}
-						// isConnected={(isConnected) => this.setState({ isConnected })}
-						// device={(device) => this.setState({ device })}
-						// transport={transport}
-						// setTransport={(transport) => this.setState({ transport })}
-					/>
-				)}
+				{isConnected && device ? null : <BluetoothConnectButton history={this.props.history} />}
 			</Wrapper>
 		);
 	}

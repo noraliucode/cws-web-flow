@@ -7,9 +7,6 @@ import { getAppIdOrNull, getAppKeysOrGenerate } from '../Utils/sdkUtil';
 import { setupDevice, setupTransport, setupIsConnected } from '../actions';
 
 class Bluetooth extends Component {
-	// state = {
-	// 	transport: null
-	// };
 	connect = async () => {
 		const { setupDevice, setupIsConnected, setupTransport } = this.props;
 		WebBleTransport.listen(async (error, device) => {
@@ -18,13 +15,9 @@ class Bluetooth extends Component {
 				this.props.setupDevice(device);
 				const transport = await WebBleTransport.connect(device);
 				this.props.setupTransport(transport);
-				// this.setState({ transport });
 
 				// disconnect listener
 				WebBleTransport.setOnDisconnect(device, () => {
-					// this.props.isConnected(false);
-					// this.setState({ transport: null });
-					// this.props.setTransport(null);
 					setupIsConnected(false);
 					setupTransport(null);
 				});
@@ -32,9 +25,6 @@ class Bluetooth extends Component {
 				// inform IFRAME ready for data
 				let bc = new BroadcastChannel('coolwallets');
 				bc.postMessage({ target: 'connection-status', connected: true });
-				// this.props.setTransport(transport);
-				// this.props.isConnected(true);
-				// this.props.device(device);
 				setupTransport(transport);
 				setupIsConnected(true);
 				setupDevice(device);
@@ -77,8 +67,6 @@ class Bluetooth extends Component {
 					this.props.history.push({
 						pathname: '/register2',
 						walletCreated, // register2 最後會用到
-						// device,
-						// transport,
 						paired
 					});
 				}

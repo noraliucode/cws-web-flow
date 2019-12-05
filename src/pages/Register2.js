@@ -58,15 +58,8 @@ class Register2 extends Component {
 	};
 	handleOnClick = async () => {
 		const { walletCreated, device } = this.props.history.location;
-		console.log('this.state.pairingPassword!!', this.state.pairingPassword);
-		console.log('this.props.history', this.props.history);
-		console.log('walletCreated', walletCreated);
-		console.log('wallet handleOnClick', this.state.wallet);
 		const { appPublicKey } = getAppKeysOrGenerate();
-		// const transport = this.props.location.transport
-		// this.state.wallet = new CWSWallet(transport, appPrivateKey)
 		try {
-			// this.props.history.push('/generateWallet');
 			const appId = await this.state.wallet.register(
 				appPublicKey,
 				this.state.pairingPassword,
@@ -95,8 +88,6 @@ class Register2 extends Component {
 	};
 	render() {
 		const { openModal } = this.props;
-		// console.log('this.props.location', this.props.location);
-		// console.log('this.props.history', this.props.history);
 		return (
 			<Container>
 				{this.whitelist()}
