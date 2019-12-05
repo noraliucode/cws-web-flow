@@ -8,7 +8,10 @@ const initialState = {
 		message: '',
 		transport: null
 	},
-	showModal: false
+	showModal: false,
+	device: null,
+	transport: null,
+	isConnected: false
 };
 
 const commonReducer = (state = initialState, action) => {
@@ -27,6 +30,24 @@ const commonReducer = (state = initialState, action) => {
 				showModal: false
 			};
 		case types.NAVIGATE_TO_REIGSTER2:
+			return {
+				...state,
+				transport: action.payload
+			};
+		case types.SETUP_DEVICE:
+			console.log('SETUP_DEVICE action.payload', action.payload);
+			return {
+				...state,
+				device: action.payload
+			};
+		case types.SETUP_ISCONNECTED:
+			console.log('SETUP_IS_CONNECTED action.payload', action.payload);
+			return {
+				...state,
+				isConnected: action.payload
+			};
+		case types.SETUP_TRANSPORT:
+			console.log('SETUP_TRANSPORT action.payload', action.payload);
 			return {
 				...state,
 				transport: action.payload

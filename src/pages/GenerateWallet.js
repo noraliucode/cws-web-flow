@@ -113,7 +113,7 @@ class GenerateWallet extends Component {
 							onClick={() => this.setState({ active: '1' })}
 							active={active === '1' && true}
 						>
-							Input existing seed
+							Import existing seed
 						</NavigationButton>
 						<NavigationButton
 							onClick={() => this.setState({ active: '2' })}

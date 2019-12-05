@@ -17,17 +17,17 @@ class Register2 extends Component {
 	state = {
 		test: [ 'CoolBitX Crypto (Android)', 'Zerion' ],
 		showModal: false,
-		pairingPassword: ''
+		pairingPassword: '',
+		wallet: null
 	};
 
-	constructor(props) {
-		super(props);
+	componentDidMount = () => {
 		const { appPrivateKey } = getAppKeysOrGenerate();
-		const transport = this.props.location.transport;
+		const { transport } = this.props;
 		const wallet = new CWSWallet(transport, appPrivateKey);
-		this.state.wallet = wallet;
-		console.log(`construct register`, wallet);
-	}
+		// this.state.wallet = wallet;
+		this.setState({ wallet });
+	};
 
 	toggle = () => {
 		const { showModal } = this.state;
@@ -57,10 +57,11 @@ class Register2 extends Component {
 		);
 	};
 	handleOnClick = async () => {
-		const { walletCreated } = this.props.history.location;
+		const { walletCreated, device } = this.props.history.location;
 		console.log('this.state.pairingPassword!!', this.state.pairingPassword);
 		console.log('this.props.history', this.props.history);
 		console.log('walletCreated', walletCreated);
+		console.log('wallet handleOnClick', this.state.wallet);
 		const { appPublicKey } = getAppKeysOrGenerate();
 		// const transport = this.props.location.transport
 		// this.state.wallet = new CWSWallet(transport, appPrivateKey)
@@ -76,6 +77,12 @@ class Register2 extends Component {
 				console.log('walletCreated!!', walletCreated);
 				this.props.history.push({
 					pathname: '/generateWallet'
+				});
+			} else {
+				console.log('wallet has been created, walletCreated');
+				this.props.history.push({
+					pathname: '/',
+					device
 				});
 			}
 		} catch (error) {
@@ -134,7 +141,8 @@ class Register2 extends Component {
 
 const mapStateToProps = (state) => ({
 	showModal: state.common.showModal,
-	modalContent: state.common.modalContent
+	modalContent: state.common.modalContent,
+	transport: state.common.transport
 });
 
 const mapDispatchToProps = {
