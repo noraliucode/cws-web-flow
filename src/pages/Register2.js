@@ -14,20 +14,17 @@ import CWSWallet from '@coolwallets/wallet';
 import { getAppKeysOrGenerate, setAppId } from '../Utils/sdkUtil';
 
 class Register2 extends Component {
-	state = {
-		test: [ 'CoolBitX Crypto (Android)', 'Zerion' ],
-		showModal: false,
-		pairingPassword: '',
-		wallet: null
-	};
-
-	componentDidMount = () => {
+	constructor(props) {
+		super(props);
 		const { appPrivateKey } = getAppKeysOrGenerate();
 		const { transport } = this.props;
-		const wallet = new CWSWallet(transport, appPrivateKey);
-		// this.state.wallet = wallet;
-		this.setState({ wallet });
-	};
+		this.state = {
+			test: [ 'CoolBitX Crypto (Android)', 'Zerion' ],
+			showModal: false,
+			pairingPassword: '',
+			wallet: new CWSWallet(transport, appPrivateKey)
+		};
+	}
 
 	toggle = () => {
 		const { showModal } = this.state;
