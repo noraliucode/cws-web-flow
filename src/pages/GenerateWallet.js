@@ -19,7 +19,7 @@ import Button from '../components/Button';
 import { checkSumFail } from '../ModalContents';
 import { connect } from 'react-redux';
 import { openModal, closeModal } from '../actions';
-
+const bip39 = require('bip39');
 const themeDarkGray = {
 	button: {
 		background: '#212529',
@@ -34,25 +34,56 @@ class GenerateWallet extends Component {
 		active: '1',
 		seedLength: 12,
 		step: 1,
-		sum: 0
+		sum: 0,
+		seed: ''
 	};
-	handleOnClick = () => {
-		console.log('confirm your seed!!');
+	handleOnClick = async () => {
+		const { wallet } = this.props;
+		const { seed } = this.state;
+		//須先將seed 做Hex
+		const hexSeed = bip39.mnemonicToSeedSync(seed).toString('hex');
+		try {
+			const result = await wallet.setSeed(hexSeed);
+			if (result) {
+				this.props.history.push({
+					pathname: '/'
+				});
+			}
+		} catch (error) {
+			console.log('error', error);
+		}
 	};
-	step1 = () => {
-		this.setState({ step: 2 });
+	step1 = async () => {
+		const { wallet } = this.props;
+		const { seedLength } = this.state;
+		try {
+			const result = await wallet.createWallet(seedLength);
+			if (result) {
+				this.setState({ step: 2 });
+			}
+		} catch (error) {
+			console.log('createWallet error', error);
+		}
 	};
 	step2 = () => {
 		this.setState({ step: 3 });
 	};
-	step3 = () => {
+	step3 = async () => {
+		const { wallet } = this.props;
 		const { closeModal } = this.props;
+		const { sum } = this.state;
+		const numberSum = Number(sum);
 		try {
-			throw new Error();
+			const result = await wallet.sendCheckSum(numberSum);
+			if (result) {
+				this.props.history.push({
+					pathname: '/'
+				});
+			}
 		} catch (error) {
+			console.log('checkSumFail error', error);
 			this.props.openModal(checkSumFail(closeModal));
 		}
-		console.log('check sum...', this.state.sum);
 	};
 	generateSteps = () => {
 		const { step, seedLength } = this.state;
@@ -127,7 +158,10 @@ class GenerateWallet extends Component {
 				{active === '1' ? (
 					<Fragment>
 						<Text>Disconnect from the Internet if you want to be absolutely safe on this step</Text>
-						<InfoBox placeholder={'Your seed here'} />
+						<InfoBox
+							placeholder={'Your seed here'}
+							onChange={({ target }) => this.setState({ seed: target.value })}
+						/>
 						<Button theme={themeDarkGray} label={'Confirm'} handleOnClick={this.handleOnClick} />
 					</Fragment>
 				) : (
@@ -139,7 +173,8 @@ class GenerateWallet extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	modalContent: state.common.modalContent
+	modalContent: state.common.modalContent,
+	wallet: state.common.wallet
 });
 
 const mapDispatchToProps = {
@@ -235,6 +270,7 @@ const NavigationBar = styled.div`
 `;
 
 const InfoBox = styled.textarea`
+  font-size: ${LARGE}
 	max-width: 577px;
 	height: 140px;
 	width: 100%;

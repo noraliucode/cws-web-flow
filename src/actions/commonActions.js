@@ -27,3 +27,8 @@ export const setupTransport = (payload) => ({
 	type: types.SETUP_TRANSPORT,
 	payload
 });
+
+export const setupWallet = (payload) => ({
+	type: types.SETUP_WALLET,
+	payload
+});

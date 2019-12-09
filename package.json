@@ -5,9 +5,10 @@
   "dependencies": {
     "@coolwallets/eth": "^0.1.8",
     "@coolwallets/transport-web-ble": "0.0.18",
-    "@coolwallets/wallet": "0.0.4",
+    "@coolwallets/wallet": "0.0.8-beta",
     "@material-ui/core": "^4.6.1",
     "@material-ui/icons": "^4.5.1",
+    "bip39": "^3.0.2",
     "express": "^4.17.1",
     "express-favicon": "^2.0.1",
     "react": "^16.12.0",

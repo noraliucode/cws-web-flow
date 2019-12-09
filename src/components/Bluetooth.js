@@ -4,11 +4,11 @@ import CoolWallet from '@coolwallets/wallet';
 import Button from './Button';
 import { connect } from 'react-redux';
 import { getAppIdOrNull, getAppKeysOrGenerate } from '../Utils/sdkUtil';
-import { setupDevice, setupTransport, setupIsConnected } from '../actions';
+import { setupDevice, setupTransport, setupIsConnected, setupWallet } from '../actions';
 
 class Bluetooth extends Component {
 	connect = async () => {
-		const { setupDevice, setupIsConnected, setupTransport } = this.props;
+		const { setupDevice, setupIsConnected, setupTransport, setupWallet } = this.props;
 		WebBleTransport.listen(async (error, device) => {
 			if (device) {
 				console.log('device', device);
@@ -35,6 +35,7 @@ class Bluetooth extends Component {
 
 				// sdk
 				const wallet = new CoolWallet(transport, appPrivateKey, appId);
+				setupWallet(wallet)
 				if (appId) {
 					// Has local appId
 					const isRegistered = await wallet.checkRegistered(); //
@@ -95,7 +96,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
 	setupDevice,
 	setupIsConnected,
-	setupTransport
+	setupTransport,
+	setupWallet
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Bluetooth);

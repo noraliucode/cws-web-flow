@@ -10,7 +10,8 @@ const initialState = {
 	showModal: false,
 	device: null,
 	transport: null,
-	isConnected: false
+	isConnected: false,
+	wallet: null
 };
 
 const commonReducer = (state = initialState, action) => {
@@ -45,6 +46,11 @@ const commonReducer = (state = initialState, action) => {
 			return {
 				...state,
 				transport: action.payload
+			};
+		case types.SETUP_WALLET:
+			return {
+				...state,
+				wallet: action.payload
 			};
 		default:
 			return state;
