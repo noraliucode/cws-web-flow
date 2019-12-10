@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import DialogContent from '@material-ui/core/DialogContent';
 import { connect } from 'react-redux';
 import { openModal, closeModal } from '../actions';
-// import { signingContent, processingContent, confirmOnCardContent } from '../ModalContents';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from './Button';
 import { BROWN_GREY, GREYISH_BROWN, DARK_GREY, LARGE } from '../constant';
@@ -22,7 +21,6 @@ const themeLightGray = {
 class Modal extends Component {
 	render() {
 		const { showModal, closeModal } = this.props;
-		// const { image, message, title } = this.props;
 		const { logo, message, title, action, disableBackdropClick } = this.props.modalContent;
 		console.log('disableBackdropClick', disableBackdropClick);
 		return (

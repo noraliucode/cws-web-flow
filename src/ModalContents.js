@@ -3,11 +3,11 @@ export const signingContent = {
 	message: 'Signing...'
 };
 
-export const processingContent = {
+export const processingContent = (message) => ({
 	logo: 'Processing',
-	message: 'Processing...',
+	message: message || 'Processing...',
 	disableBackdropClick: true
-};
+});
 
 export const confirmOnCardContent = {
 	logo: 'card.png',
@@ -39,4 +39,10 @@ export const errorMessageContent = (error) => ({
 	title: 'Error',
 	logo: '',
 	message: error
+});
+
+export const hintMessageContent = (message) => ({
+	title: 'Notice',
+	logo: '',
+	message: message
 });

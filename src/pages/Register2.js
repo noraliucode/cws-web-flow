@@ -4,7 +4,7 @@ import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import styled from 'styled-components';
 import Button from '../components/Button';
 import { connect } from 'react-redux';
-import { openModal, closeModal } from '../actions';
+import { openModal, closeModal, setupDevice } from '../actions';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { resetContent, confirmOnCardContent } from '../ModalContents';
@@ -30,29 +30,29 @@ class Register2 extends Component {
 		const { showModal } = this.state;
 		this.setState({ showModal: !showModal });
 	};
-	whitelist = () => {
-		const { test, showModal } = this.state;
-		return (
-			<Dialog
-				aria-describedby="alert-dialog-description"
-				onClose={this.toggle}
-				aria-labelledby="simple-dialog-title"
-				open={showModal}
-				fullWidth={true}
-				maxWidth={'xs'}
-				PaperProps={{
-					style: {
-						backgroundColor: '#202124',
-						color: '#fff',
-						boxShadow: '10px 10px 20px 0px rgba(0,0,0,0.2)',
-						borderRadius: 15
-					}
-				}}
-			>
-				<DialogTitle id="simple-dialog-title">Your device</DialogTitle>
-			</Dialog>
-		);
-	};
+	// whitelist = () => {
+	// 	const { test, showModal } = this.state;
+	// 	return (
+	// 		<Dialog
+	// 			aria-describedby="alert-dialog-description"
+	// 			onClose={this.toggle}
+	// 			aria-labelledby="simple-dialog-title"
+	// 			open={showModal}
+	// 			fullWidth={true}
+	// 			maxWidth={'xs'}
+	// 			PaperProps={{
+	// 				style: {
+	// 					backgroundColor: '#202124',
+	// 					color: '#fff',
+	// 					boxShadow: '10px 10px 20px 0px rgba(0,0,0,0.2)',
+	// 					borderRadius: 15
+	// 				}
+	// 			}}
+	// 		>
+	// 			<DialogTitle id="simple-dialog-title">Your device</DialogTitle>
+	// 		</Dialog>
+	// 	);
+	// };
 	handleOnClick = async () => {
 		const { walletCreated } = this.props.history.location;
 		const { appPublicKey } = getAppKeysOrGenerate();
@@ -87,11 +87,26 @@ class Register2 extends Component {
 		const { paired } = this.props.history.location;
 		return paired ? comp1 : comp2;
 	};
+	resetCard = async () => {
+		const { history, setupDevice } = this.props;
+		const { wallet } = this.state;
+		const { closeModal, openModal } = this.props;
+		closeModal();
+		openModal(confirmOnCardContent);
+		const result = await wallet.resetCard();
+		if (result) {
+			closeModal();
+			history.push({
+				pathname: '/register2',
+				paired: null
+			});
+		}
+	};
 	render() {
 		const { openModal } = this.props;
 		return (
 			<Container>
-				{this.whitelist()}
+				{/* {this.whitelist()} */}
 				<Title>
 					{this.renderConditionalComponent(
 						<Fragment>
@@ -106,8 +121,10 @@ class Register2 extends Component {
 				<InfoBox>
 					{this.renderConditionalComponent(
 						<Fragment>
-							'Please use the pairing password to add CoolWallet Connect to'{' '}
-							<TextUnderline onClick={() => this.setState({ showModal: true })}>whitelist.</TextUnderline>
+							{/* Please use the pairing password to add CoolWallet Connect to{' '} */}
+							Please add the pairing password to register.
+							{/* {先暫時拿掉whiteList} */}
+							{/* <TextUnderline onClick={() => this.setState({ showModal: true })}>whitelist.</TextUnderline> */}
 						</Fragment>,
 						'Please click register to connect CoolWalletS with CoolWalletConnect.'
 					)}
@@ -121,9 +138,7 @@ class Register2 extends Component {
 					<Button width={200} label={'Register'} handleOnClick={this.handleOnClick} />
 				</Wrapper>
 				{this.renderConditionalComponent(
-					<Hint onClick={() => openModal(resetContent(() => this.state.wallet.resetCard()))}>
-						Lost your device?
-					</Hint>,
+					<Hint onClick={() => openModal(resetContent(() => this.resetCard()))}>Lost your device?</Hint>,
 					null
 				)}
 			</Container>
@@ -139,7 +154,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
 	openModal,
-	closeModal
+	closeModal,
+	setupDevice
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register2);

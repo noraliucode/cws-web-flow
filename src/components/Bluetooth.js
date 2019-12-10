@@ -4,11 +4,13 @@ import CoolWallet from '@coolwallets/wallet';
 import Button from './Button';
 import { connect } from 'react-redux';
 import { getAppIdOrNull, getAppKeysOrGenerate } from '../Utils/sdkUtil';
-import { setupDevice, setupTransport, setupIsConnected, setupWallet } from '../actions';
+import { setupDevice, setupTransport, setupIsConnected, setupWallet, openModal, closeModal } from '../actions';
+import { processingContent, hintMessageContent } from '../ModalContents';
 
 class Bluetooth extends Component {
 	connect = async () => {
-		const { setupDevice, setupIsConnected, setupTransport, setupWallet } = this.props;
+		const { setupDevice, setupIsConnected, setupTransport, setupWallet, openModal, closeModal } = this.props;
+		openModal(processingContent('Connecting...'));
 		WebBleTransport.listen(async (error, device) => {
 			if (device) {
 				console.log('device', device);
@@ -35,7 +37,7 @@ class Bluetooth extends Component {
 
 				// sdk
 				const wallet = new CoolWallet(transport, appPrivateKey, appId);
-				setupWallet(wallet)
+				setupWallet(wallet);
 				if (appId) {
 					// Has local appId
 					const isRegistered = await wallet.checkRegistered(); //
@@ -44,6 +46,7 @@ class Bluetooth extends Component {
 					if (isRegistered) {
 						// return transport // 有沒有錢包
 						const { walletCreated } = await wallet.getCardInfo();
+						closeModal();
 						if (walletCreated) {
 							return transport;
 						} else {
@@ -55,6 +58,7 @@ class Bluetooth extends Component {
 						}
 					} else {
 						// 有存Appid 但是卡片不認得，所以無效
+						closeModal();
 						console.log(`card reset/ different card`);
 						appId = null;
 					}
@@ -62,6 +66,7 @@ class Bluetooth extends Component {
 				if (!appId) {
 					// Has no appId. Must go to register page
 					const { paired, walletCreated } = await wallet.getCardInfo();
+					closeModal();
 					// walletCreated 已經有錢包
 					// paired 跟其他APP配對過
 					//發現可以去同一頁就好，因為做的事一樣，只是之後的流程不同
@@ -97,7 +102,9 @@ const mapDispatchToProps = {
 	setupDevice,
 	setupIsConnected,
 	setupTransport,
-	setupWallet
+	setupWallet,
+	openModal,
+	closeModal
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Bluetooth);
