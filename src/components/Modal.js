@@ -23,10 +23,12 @@ class Modal extends Component {
 	render() {
 		const { showModal, closeModal } = this.props;
 		// const { image, message, title } = this.props;
-		const { logo, message, title, action } = this.props.modalContent;
+		const { logo, message, title, action, disableBackdropClick } = this.props.modalContent;
+		console.log('disableBackdropClick', disableBackdropClick);
 		return (
 			<div>
 				<Dialog
+					disableBackdropClick={disableBackdropClick || false}
 					aria-describedby="alert-dialog-description"
 					onClose={closeModal}
 					aria-labelledby="simple-dialog-title"

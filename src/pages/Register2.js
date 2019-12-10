@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { openModal, closeModal } from '../actions';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { resetContent } from '../ModalContents';
+import { resetContent, confirmOnCardContent } from '../ModalContents';
 import AccountBalanceWalletOutlinedIcon from '@material-ui/icons/AccountBalanceWalletOutlined';
 
 import CWSWallet from '@coolwallets/wallet';
@@ -54,14 +54,19 @@ class Register2 extends Component {
 		);
 	};
 	handleOnClick = async () => {
-		const { walletCreated, device } = this.props.history.location;
+		const { walletCreated } = this.props.history.location;
 		const { appPublicKey } = getAppKeysOrGenerate();
+		const { openModal, closeModal } = this.props;
 		try {
+			openModal(confirmOnCardContent);
 			const appId = await this.state.wallet.register(
 				appPublicKey,
 				this.state.pairingPassword,
 				'CoolWalletConnect'
 			);
+			if (appId) {
+				closeModal();
+			}
 			await setAppId(appId);
 			if (!walletCreated) {
 				console.log('walletCreated!!', walletCreated);
@@ -71,8 +76,7 @@ class Register2 extends Component {
 			} else {
 				console.log('wallet has been created, walletCreated');
 				this.props.history.push({
-					pathname: '/',
-					device
+					pathname: '/'
 				});
 			}
 		} catch (error) {

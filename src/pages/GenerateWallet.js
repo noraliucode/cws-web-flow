@@ -16,7 +16,7 @@ import {
 } from '../constant';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import Button from '../components/Button';
-import { checkSumFail } from '../ModalContents';
+import { checkSumFail, processingContent, errorMessageContent } from '../ModalContents';
 import { connect } from 'react-redux';
 import { openModal, closeModal } from '../actions';
 const bip39 = require('bip39');
@@ -56,12 +56,16 @@ class GenerateWallet extends Component {
 	step1 = async () => {
 		const { wallet } = this.props;
 		const { seedLength } = this.state;
+		const { openModal, closeModal } = this.props;
+		openModal(processingContent);
 		try {
 			const result = await wallet.createWallet(seedLength);
+			closeModal();
 			if (result) {
 				this.setState({ step: 2 });
 			}
 		} catch (error) {
+			openModal(errorMessageContent(error.message));
 			console.log('createWallet error', error);
 		}
 	};
@@ -70,19 +74,21 @@ class GenerateWallet extends Component {
 	};
 	step3 = async () => {
 		const { wallet } = this.props;
-		const { closeModal } = this.props;
+		const { closeModal, openModal } = this.props;
 		const { sum } = this.state;
 		const numberSum = Number(sum);
+		openModal(processingContent);
 		try {
 			const result = await wallet.sendCheckSum(numberSum);
 			if (result) {
+				closeModal();
 				this.props.history.push({
 					pathname: '/'
 				});
 			}
 		} catch (error) {
 			console.log('checkSumFail error', error);
-			this.props.openModal(checkSumFail(closeModal));
+			openModal(checkSumFail(closeModal));
 		}
 	};
 	generateSteps = () => {

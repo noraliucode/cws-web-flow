@@ -5,12 +5,14 @@ export const signingContent = {
 
 export const processingContent = {
 	logo: 'Processing',
-	message: 'Processing...'
+	message: 'Processing...',
+	disableBackdropClick: true
 };
 
 export const confirmOnCardContent = {
 	logo: 'card.png',
-	message: 'Confirm on your card'
+	message: 'Confirm on your card',
+	disableBackdropClick: true
 };
 
 export const resetContent = (callback) => ({
@@ -31,4 +33,10 @@ export const checkSumFail = (callback) => ({
 		okCallback: callback,
 		okText: 'ok'
 	}
+});
+
+export const errorMessageContent = (error) => ({
+	title: 'Error',
+	logo: '',
+	message: error
 });
