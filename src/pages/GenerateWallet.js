@@ -57,7 +57,7 @@ class GenerateWallet extends Component {
 		const { wallet } = this.props;
 		const { seedLength } = this.state;
 		const { openModal, closeModal } = this.props;
-		openModal(processingContent);
+		openModal(processingContent());
 		try {
 			const result = await wallet.createWallet(seedLength);
 			closeModal();
@@ -77,7 +77,7 @@ class GenerateWallet extends Component {
 		const { closeModal, openModal } = this.props;
 		const { sum } = this.state;
 		const numberSum = Number(sum);
-		openModal(processingContent);
+		openModal(processingContent());
 		try {
 			const result = await wallet.sendCheckSum(numberSum);
 			if (result) {

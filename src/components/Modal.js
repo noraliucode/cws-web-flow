@@ -65,15 +65,6 @@ class Modal extends Component {
 						) : null}
 					</ActionWrapper>
 				</Dialog>
-				{/* <Button variant="outlined" color="primary" onClick={() => this.props.openModal(signingContent)}>
-					Signing...
-				</Button>
-				<Button variant="outlined" color="primary" onClick={() => this.props.openModal(processingContent)}>
-					Processing...
-				</Button>
-				<Button variant="outlined" color="primary" onClick={() => this.props.openModal(confirmOnCardContent)}>
-					Confirm on your card
-				</Button> */}
 			</div>
 		);
 	}
