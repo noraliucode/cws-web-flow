@@ -11,7 +11,7 @@ export default class IframeComponent extends Component {
   }
 
   setupListeners() {
-    const tabDomain = 'https://coolwallets-connect.herokuapp.com'
+    const tabDomain = 'https://noraliu0830.github.io/cws-web-flow/#/'
     // const tabDomain = 'http://localhost:3000'
 
     // Open as IFRAME
