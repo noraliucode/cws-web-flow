@@ -9,10 +9,10 @@ export default class Container extends Component {
 }
 
 const ContainerMain = styled.div`
-	height: calc(100% - ${HEADER_HEIGHT}px);
 	width: 100%;
 	background: #333639;
 	position: absolute;
 	display: flex;
 	justify-content: center;
+	height: 100%;
 `;

@@ -214,11 +214,9 @@ const Image = styled.img`
 const Text = styled.div`
 	max-width: 520px;
 	width: 80%;
-	height: 41px;
 	font-size: ${MEDIUM};
 	color: #7f7f7f;
-	margin: 20px;
-	height: 82px;
+	margin: 40px 20px;
 	color: ${BROWN_GREY};
 	display: flex;
 	align-items: center;
@@ -306,6 +304,7 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	flex-flow: column;
 `;
 const Text2 = styled.div`
 	height: 82px;

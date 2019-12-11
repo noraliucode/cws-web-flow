@@ -163,9 +163,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(Register2);
 const Container = styled.div`
 	max-width: 604px;
 	width: 90%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
 `;
 
 const TextUnderline = styled.div`
@@ -178,9 +175,10 @@ const Title = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	margin-bottom: 30px;
-	width: 265px;
+	max-width: 265px;
 	display: flex;
+	margin: auto;
+	margin-bottom: 30px;
 `;
 const InfoBox = styled.div`
 	height: 300px;
@@ -194,7 +192,7 @@ const InfoBox = styled.div`
 	box-sizing: border-box;
 `;
 const Wrapper = styled.div`
-	margin: 50px;
+	margin: 50px 0;
 	display: flex;
 	width: 100%;
 	justify-content: space-between;
@@ -208,6 +206,7 @@ const PairingPasswordInput = styled.input`
 	border: 0;
 	padding: 5px 20px;
 	box-sizing: border-box;
+	margin-right: 10px;
 	&:focus {
 		outline: none;
 	}
@@ -217,7 +216,7 @@ const PairingPasswordInput = styled.input`
 	}
 `;
 const Hint = styled.div`
-	width: 212px;
+	width: 100%;
 	height: 21px;
 	font-size: ${MEDIUM};
 	text-align: center;

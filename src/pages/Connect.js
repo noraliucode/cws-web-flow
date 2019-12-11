@@ -57,6 +57,8 @@ const Wrapper = styled.div`
 	flex-direction: column;
 	align-items: center;
 	width: 480px;
+	height: 500px;
+	flex-flow: column;
 	@media (max-width: 480px) {
 		width: 100%;
 	}
