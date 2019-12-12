@@ -40,16 +40,21 @@ class GenerateWallet extends Component {
 	handleOnClick = async () => {
 		const { wallet } = this.props;
 		const { seed } = this.state;
+		const { openModal, closeModal } = this.props;
+		openModal(processingContent());
 		//須先將seed 做Hex
 		const hexSeed = bip39.mnemonicToSeedSync(seed).toString('hex');
 		try {
 			const result = await wallet.setSeed(hexSeed);
 			if (result) {
+				closeModal();
 				this.props.history.push({
 					pathname: '/'
 				});
 			}
 		} catch (error) {
+			closeModal();
+			openModal(errorMessageContent(error));
 			console.log('error', error);
 		}
 	};
