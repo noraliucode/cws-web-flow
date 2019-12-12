@@ -11,7 +11,8 @@ const initialState = {
 	device: null,
 	transport: null,
 	isConnected: false,
-	wallet: null
+	wallet: null,
+	paired: null
 };
 
 const commonReducer = (state = initialState, action) => {
@@ -51,6 +52,11 @@ const commonReducer = (state = initialState, action) => {
 			return {
 				...state,
 				wallet: action.payload
+			};
+		case types.SETUP_PAIRED:
+			return {
+				...state,
+				paired: action.payload
 			};
 		default:
 			return state;

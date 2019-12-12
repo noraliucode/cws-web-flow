@@ -32,3 +32,8 @@ export const setupWallet = (payload) => ({
 	type: types.SETUP_WALLET,
 	payload
 });
+
+export const setupPaired = (payload) => ({
+	type: types.SETUP_PAIRED,
+	payload
+});

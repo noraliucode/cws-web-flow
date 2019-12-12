@@ -4,12 +4,28 @@ import CoolWallet from '@coolwallets/wallet';
 import Button from './Button';
 import { connect } from 'react-redux';
 import { getAppIdOrNull, getAppKeysOrGenerate } from '../Utils/sdkUtil';
-import { setupDevice, setupTransport, setupIsConnected, setupWallet, openModal, closeModal } from '../actions';
+import {
+	setupDevice,
+	setupTransport,
+	setupIsConnected,
+	setupWallet,
+	openModal,
+	closeModal,
+	setupPaired
+} from '../actions';
 import { processingContent, hintMessageContent } from '../ModalContents';
 
 class Bluetooth extends Component {
 	connect = async () => {
-		const { setupDevice, setupIsConnected, setupTransport, setupWallet, openModal, closeModal } = this.props;
+		const {
+			setupDevice,
+			setupIsConnected,
+			setupTransport,
+			setupWallet,
+			openModal,
+			closeModal,
+			setupPaired
+		} = this.props;
 		openModal(processingContent('Connecting...'));
 		WebBleTransport.listen(async (error, device) => {
 			if (device) {
@@ -74,14 +90,15 @@ class Bluetooth extends Component {
 				if (!appId) {
 					// Has no appId. Must go to register page
 					const { paired, walletCreated } = await wallet.getCardInfo();
+					setupPaired(paired);
 					closeModal();
 					// walletCreated 已經有錢包
 					// paired 跟其他APP配對過
 					//發現可以去同一頁就好，因為做的事一樣，只是之後的流程不同
 					this.props.history.push({
 						pathname: '/register2',
-						walletCreated, // register2 最後會用到
-						paired
+						walletCreated // register2 最後會用到
+						// paired
 					});
 				}
 			}
@@ -112,7 +129,8 @@ const mapDispatchToProps = {
 	setupTransport,
 	setupWallet,
 	openModal,
-	closeModal
+	closeModal,
+	setupPaired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Bluetooth);

@@ -4,7 +4,7 @@ import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import styled from 'styled-components';
 import Button from '../components/Button';
 import { connect } from 'react-redux';
-import { openModal, closeModal, setupDevice } from '../actions';
+import { openModal, closeModal, setupDevice, setupPaired } from '../actions';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { resetContent, confirmOnCardContent } from '../ModalContents';
@@ -84,22 +84,18 @@ class Register2 extends Component {
 		}
 	};
 	renderConditionalComponent = (comp1, comp2) => {
-		const { paired } = this.props.history.location;
+		const { paired } = this.props;
 		return paired ? comp1 : comp2;
 	};
 	resetCard = async () => {
 		const { history, setupDevice } = this.props;
 		const { wallet } = this.state;
-		const { closeModal, openModal } = this.props;
-		closeModal();
+		const { closeModal, openModal, setupPaired } = this.props;
 		openModal(confirmOnCardContent);
 		const result = await wallet.resetCard();
 		if (result) {
+			setupPaired(null);
 			closeModal();
-			history.push({
-				pathname: '/register2',
-				paired: null
-			});
 		}
 	};
 	render() {
@@ -149,13 +145,16 @@ class Register2 extends Component {
 const mapStateToProps = (state) => ({
 	showModal: state.common.showModal,
 	modalContent: state.common.modalContent,
-	transport: state.common.transport
+	transport: state.common.transport,
+	wallet: state.common.wallet,
+	paired: state.common.paired
 });
 
 const mapDispatchToProps = {
 	openModal,
 	closeModal,
-	setupDevice
+	setupDevice,
+	setupPaired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register2);
