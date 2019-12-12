@@ -22,6 +22,14 @@ class Bluetooth extends Component {
 				WebBleTransport.setOnDisconnect(device, () => {
 					setupIsConnected(false);
 					setupTransport(null);
+					openModal(
+						hintMessageContent('Bluetooth disconnected. Please reconnect again.', true, () => {
+							closeModal();
+							this.props.history.push({
+								pathname: '/'
+							});
+						})
+					);
 				});
 
 				// inform IFRAME ready for data

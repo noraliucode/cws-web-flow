@@ -41,8 +41,13 @@ export const errorMessageContent = (error) => ({
 	message: error
 });
 
-export const hintMessageContent = (message) => ({
+export const hintMessageContent = (message, disableBackdropClick, callback) => ({
 	title: 'Notice',
 	logo: '',
-	message: message
+	message: message,
+	disableBackdropClick,
+	action: {
+		okCallback: callback,
+		okText: 'Ok'
+	}
 });
