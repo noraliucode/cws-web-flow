@@ -8,7 +8,7 @@ export const type = (text) => {
   }else if(regNumber.test(text)){
       seedType = 'number'
   }else{
-      seedType = 'eng'
+      seedType = 'letters'
   }
   return seedType
 }
@@ -22,7 +22,7 @@ export const linearSearh = (text, array) => {
 	return false;
 };
 
-export const english = ["abandon",
+export const letters = ["abandon",
 "ability",
 "able",
 "about",
