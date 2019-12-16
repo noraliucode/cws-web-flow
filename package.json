@@ -24,7 +24,7 @@
     "start": "node server.js",
     "startn": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
@@ -45,7 +45,10 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^2.1.1"
+    "@babel/core": "^7.7.5",
+    "@babel/preset-env": "^7.7.6",
+    "gh-pages": "^2.1.1",
+    "jest": "^24.9.0"
   },
   "homepage": "http://noraliu0830.github.io/cws-web-flow"
 }
