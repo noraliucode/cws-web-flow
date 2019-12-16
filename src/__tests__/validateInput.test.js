@@ -11,8 +11,13 @@ it('should return "Invalid Input" when the pairing password is invalid', () => {
 });
 
 it('should only return numbers', () => {
-	expect(removeInvalidChar('1234567890', 'num')).toEqual('1234567890');
-	expect(removeInvalidChar('1234567890&*&_)', 'num')).toEqual('1234567890');
+	expect(removeInvalidChar('1234567890', 'number')).toEqual('1234567890');
+	expect(removeInvalidChar('1234567890&*&_)', 'number')).toEqual('1234567890');
+});
+
+it('should only return numbers', () => {
+	expect(removeInvalidChar('abc', 'letters')).toEqual('abc');
+	expect(removeInvalidChar('abc&*&_)', 'letters')).toEqual('abc');
 });
 
 it('should only number and letter ', () => {

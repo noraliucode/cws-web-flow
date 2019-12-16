@@ -9,8 +9,10 @@ export const validatePairingPassword = (number) => {
 export const removeInvalidChar = (text, type = 'both') => {
 	if (type === 'both') {
 		return text.toLowerCase().replace(/[^0-9a-z]/g, '');
-	} else {
+	} else if (type === 'number') {
 		return text.replace(/[^0-9]/g, '');
+	} else {
+		return text.replace(/[^a-z]/g, '');
 	}
 };
 

@@ -19,6 +19,9 @@ import Button from '../components/Button';
 import { checkSumFail, processingContent, errorMessageContent } from '../ModalContents';
 import { connect } from 'react-redux';
 import { openModal, closeModal } from '../actions';
+import { type, linearSearh } from '../Utils/bip39Utils';
+import { removeInvalidChar, addSpace } from '../Utils/validateInput';
+
 const bip39 = require('bip39');
 const themeDarkGray = {
 	button: {
@@ -35,7 +38,11 @@ class GenerateWallet extends Component {
 		seedLength: 12,
 		step: 1,
 		sum: 0,
-		seed: ''
+		seed: '',
+		errorMessage: '',
+		seedType: '',
+		isSeedValidated: true,
+		isFormatValidated: true
 	};
 	handleOnClick = async () => {
 		const { wallet } = this.props;
@@ -143,7 +150,7 @@ class GenerateWallet extends Component {
 	};
 
 	render() {
-		const { active, step } = this.state;
+		const { active, step, isSeedValidated, isFormatValidated } = this.state;
 		return (
 			<Container>
 				<Title>
@@ -170,8 +177,34 @@ class GenerateWallet extends Component {
 					<Fragment>
 						<Text>Disconnect from the Internet if you want to be absolutely safe on this step</Text>
 						<InfoBox
+							isSeedValidated={isSeedValidated}
+							isFormatValidated={isFormatValidated}
 							placeholder={'Your seed here'}
-							onChange={({ target }) => this.setState({ seed: target.value })}
+							onChange={({ target }) => {
+								console.log('target.value', target.value);
+								let formattedText = target.value;
+								if (type(target.value) === 'mixed') {
+									this.setState({ seedType: 'mixed', isFormatValidated: false });
+								} else if (type(target.value) === 'number') {
+									formattedText = removeInvalidChar(formattedText, 'number');
+									this.setState({
+										seed: addSpace(formattedText),
+										seedType: 'number',
+										isSeedValidated: formattedText
+											.split(' ')
+											.map((char) => linearSearh(char, 'number'))
+									});
+								} else {
+									formattedText = removeInvalidChar(formattedText, 'letters').toLowerCase();
+									this.setState({
+										seed: formattedText,
+										seedType: 'letters',
+										isSeedValidated: formattedText
+											.split(' ')
+											.map((char) => linearSearh(char, 'letters'))
+									});
+								}
+							}}
 						/>
 						<Button theme={themeDarkGray} label={'Confirm'} handleOnClick={this.handleOnClick} />
 					</Fragment>
@@ -296,7 +329,7 @@ const InfoBox = styled.textarea`
 	box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 8px 0px;
 	&:focus {
 		outline: none;
-		border: solid 1px ${ORANGEY_YELLOW};
+		border: solid 1px ${(props) => (props.isSeedValidated && props.isFormatValidated ? ORANGEY_YELLOW : 'red')} ;
 	}
 	::placeholder {
 		color: ${GREYISH_BROWN};
