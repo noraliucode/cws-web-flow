@@ -27,9 +27,9 @@ it('should only number and letter ', () => {
 });
 
 it('should add space every 5 chars', () => {
-	expect(addSpace('1234567890')).toEqual('12345 67890 ');
-	expect(addSpace('12345')).toEqual('12345 ');
-	expect(addSpace('123456789012345')).toEqual('12345 67890 12345 ');
+	expect(addSpace('1234567890')).toEqual('12345 67890');
+	expect(addSpace('12345')).toEqual('12345');
+	expect(addSpace('123456789012345')).toEqual('12345 67890 12345');
 });
 
 it('should return an array of lowercase words', () => {

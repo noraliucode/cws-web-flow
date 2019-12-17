@@ -8,7 +8,7 @@ export const validatePairingPassword = (number) => {
 
 export const removeInvalidChar = (text, type = 'both') => {
 	if (type === 'both') {
-		return text.toLowerCase().replace(/[^0-9a-z]/g, '');
+		return text.toLowerCase().replace(/[^0-9a-z ]/g, '');
 	} else if (type === 'number') {
 		return text.replace(/[^0-9]/g, '');
 	} else {
@@ -18,11 +18,12 @@ export const removeInvalidChar = (text, type = 'both') => {
 
 export const addSpace = (seed) => {
 	let newSeed = [];
-	for (let i = 0; i < seed.length; i++) {
-		if ((i + 1) % 5 === 0) {
-			newSeed.push(seed[i] + ' ');
+	const removeSpaceSeed = seed.replace(/[^0-9]/g, '');
+	for (let i = 0; i < removeSpaceSeed.length; i++) {
+		if ((i + 1) % 5 === 0 && i + 1 != removeSpaceSeed.length) {
+			newSeed.push(removeSpaceSeed[i] + ' ');
 		} else {
-			newSeed.push(seed[i]);
+			newSeed.push(removeSpaceSeed[i]);
 		}
 	}
 	return newSeed.join('');

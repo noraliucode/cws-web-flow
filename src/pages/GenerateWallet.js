@@ -21,6 +21,7 @@ import { connect } from 'react-redux';
 import { openModal, closeModal } from '../actions';
 import { type, linearSearh } from '../Utils/bip39Utils';
 import { removeInvalidChar, addSpace } from '../Utils/validateInput';
+import { letters, number } from '../Utils/bip39Utils';
 
 const bip39 = require('bip39');
 const themeDarkGray = {
@@ -150,7 +151,8 @@ class GenerateWallet extends Component {
 	};
 
 	render() {
-		const { active, step, isSeedValidated, isFormatValidated } = this.state;
+		const { active, step, isSeedValidated, isFormatValidated, seed } = this.state;
+		console.log('isSeedValidated', isSeedValidated);
 		return (
 			<Container>
 				<Title>
@@ -177,31 +179,30 @@ class GenerateWallet extends Component {
 					<Fragment>
 						<Text>Disconnect from the Internet if you want to be absolutely safe on this step</Text>
 						<InfoBox
+							value={seed}
 							isSeedValidated={isSeedValidated}
 							isFormatValidated={isFormatValidated}
 							placeholder={'Your seed here'}
-							onChange={({ target }) => {
-								console.log('target.value', target.value);
-								let formattedText = target.value;
-								if (type(target.value) === 'mixed') {
-									this.setState({ seedType: 'mixed', isFormatValidated: false });
-								} else if (type(target.value) === 'number') {
-									formattedText = removeInvalidChar(formattedText, 'number');
+							onChange={(e) => {
+								let formattedText = removeInvalidChar(e.target.value, 'both');
+								if (type(e.target.value) === 'mixed') {
 									this.setState({
-										seed: addSpace(formattedText),
+										seedType: 'mixed',
+										isFormatValidated: false,
+										seed: formattedText
+									});
+								} else if (type(e.target.value) === 'number') {
+									this.setState({
+										seed: e.keyCode === 8 ? formattedText : addSpace(formattedText),
 										seedType: 'number',
-										isSeedValidated: formattedText
-											.split(' ')
-											.map((char) => linearSearh(char, 'number'))
+										isFormatValidated: true
 									});
 								} else {
-									formattedText = removeInvalidChar(formattedText, 'letters').toLowerCase();
+									formattedText = formattedText.toLowerCase();
 									this.setState({
 										seed: formattedText,
 										seedType: 'letters',
-										isSeedValidated: formattedText
-											.split(' ')
-											.map((char) => linearSearh(char, 'letters'))
+										isFormatValidated: true
 									});
 								}
 							}}
