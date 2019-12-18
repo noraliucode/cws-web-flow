@@ -22,15 +22,15 @@ const ButtonBase = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	cursor: pointer;
-	transition: background-color 0.3s ease-in-out;
-	transition-property: background-color, color;
+	// transition: background-color 0.3s ease-in-out;
+	// transition-property: background-color, color;
 	@media (max-width: 480px) {
 		width: 100%;
 	}
 `;
 
 const ButtonMain = styled(ButtonBase)`
+	cursor: ${props => props.theme.button.cursor ? props.theme.button.cursor: 'pointer' };
 	max-width: ${(props) => (props.width ? `${props.width}px` : '320px')};
 	border: ${(props) => (props.theme.button.borderColor ? `solid 1px ${props.theme.button.borderColor}` : 'none')};
 	background-color: ${(props) => props.theme.button.background};

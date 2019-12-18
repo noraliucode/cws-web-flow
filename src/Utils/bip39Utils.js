@@ -22,6 +22,24 @@ export const linearSearh = (text, array) => {
 	return false;
 };
 
+export const validateNmemonic = (mnemonic, array) => {
+  return mnemonic.split(' ')
+    .map((char) => linearSearh(char, array))
+    .some((x) => {
+      if (x === false ) {
+        return false;
+      }
+      return true;
+    })
+}
+
+export const validateLength = (mnemonic) => {
+  if(mnemonic.split(' ').length >= 12 ){
+    return true
+  }
+  return false
+}
+
 export const letters = ["abandon",
 "ability",
 "able",

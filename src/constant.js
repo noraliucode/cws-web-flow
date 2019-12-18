@@ -6,6 +6,7 @@ export const DARK_GREY = '#292c2f';
 export const DARK_GREY2 = '#202124';
 export const DARK_GREY3 = '#25262a';
 export const LIGHT_YELLOW = '#ffc539';
+export const DARK_RED = '#a92b2b';
 
 //fontsize
 export const SMALL = '1rem'; //16px

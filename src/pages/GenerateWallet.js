@@ -12,24 +12,35 @@ import {
 	MEDIUM,
 	HUGE,
 	EXTRA_LARGE,
-	SMALL
+	SMALL,
+	DARK_RED
 } from '../constant';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import Button from '../components/Button';
 import { checkSumFail, processingContent, errorMessageContent } from '../ModalContents';
 import { connect } from 'react-redux';
 import { openModal, closeModal } from '../actions';
-import { type, linearSearh } from '../Utils/bip39Utils';
+import { type } from '../Utils/bip39Utils';
 import { removeInvalidChar, addSpace } from '../Utils/validateInput';
-import { letters, number } from '../Utils/bip39Utils';
+import { letters, number, validateNmemonic, validateLength } from '../Utils/bip39Utils';
 
 const bip39 = require('bip39');
 const themeDarkGray = {
 	button: {
 		background: '#212529',
 		color: GREYISH_BROWN,
-		hoverBackground: DARK_GREY,
-		hoverColor: BROWN_GREY
+		hoverBackground: '#212529',
+		hoverColor: GREYISH_BROWN,
+		cursor: 'default'
+	}
+};
+
+const main = {
+	button: {
+		background: ORANGEY_YELLOW,
+		color: 'white',
+		hoverBackground: LIGHT_YELLOW,
+		hoverColor: 'white'
 	}
 };
 
@@ -42,16 +53,25 @@ class GenerateWallet extends Component {
 		seed: '',
 		errorMessage: '',
 		seedType: '',
-		isSeedValidated: true,
+		isSeedValidated: false,
 		isFormatValidated: true
 	};
 	handleOnClick = async () => {
 		const { wallet } = this.props;
-		const { seed } = this.state;
+		const { seed, isSeedValidated, isFormatValidated, seedType } = this.state;
 		const { openModal, closeModal } = this.props;
+		if (!isFormatValidated || !validateLength(seed)) {
+			return;
+		}
+		if (!validateNmemonic(seed, seedType === 'number' ? number : letters)) {
+			this.setState({ errorMessage: 'Invalid Mnemonic' });
+			return;
+		}
+
 		openModal(processingContent());
 		//須先將seed 做Hex
 		const hexSeed = bip39.mnemonicToSeedSync(seed).toString('hex');
+		if (!wallet) return;
 		try {
 			const result = await wallet.setSeed(hexSeed);
 			if (result) {
@@ -151,7 +171,7 @@ class GenerateWallet extends Component {
 	};
 
 	render() {
-		const { active, step, isSeedValidated, isFormatValidated, seed } = this.state;
+		const { active, step, isSeedValidated, isFormatValidated, seed, seedType, errorMessage } = this.state;
 		console.log('isSeedValidated', isSeedValidated);
 		return (
 			<Container>
@@ -184,12 +204,14 @@ class GenerateWallet extends Component {
 							isFormatValidated={isFormatValidated}
 							placeholder={'Your seed here'}
 							onChange={(e) => {
+								this.setState({ errorMessage: '' });
 								let formattedText = removeInvalidChar(e.target.value, 'both');
 								if (type(e.target.value) === 'mixed') {
 									this.setState({
 										seedType: 'mixed',
 										isFormatValidated: false,
-										seed: formattedText
+										seed: formattedText,
+										errorMessage: 'Invalid format'
 									});
 								} else if (type(e.target.value) === 'number') {
 									this.setState({
@@ -207,7 +229,13 @@ class GenerateWallet extends Component {
 								}
 							}}
 						/>
-						<Button theme={themeDarkGray} label={'Confirm'} handleOnClick={this.handleOnClick} />
+						<RedText>{errorMessage}</RedText>
+						<Button
+							// avtive={validateNmemonic(seed, seedType === 'number' ? number : letters)}
+							theme={validateLength(seed) && isFormatValidated ? main : themeDarkGray}
+							label={'Confirm'}
+							handleOnClick={this.handleOnClick}
+						/>
 					</Fragment>
 				) : (
 					this.generateSteps()
@@ -229,6 +257,12 @@ const mapDispatchToProps = {
 
 export default connect(mapStateToProps, mapDispatchToProps)(GenerateWallet);
 
+const RedText = styled.div`
+	color: ${DARK_RED};
+	height: 80px;
+	padding-top: 20px;
+	box-sizing: border-box;
+`;
 const Input = styled.input`
 	width: 200px;
 	height: 50px;
@@ -326,11 +360,10 @@ const InfoBox = styled.textarea`
 	box-sizing: border-box;
 	border-radius: 23px;
 	resize: none;
-	margin-bottom: 40px;
 	box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 8px 0px;
 	&:focus {
 		outline: none;
-		border: solid 1px ${(props) => (props.isSeedValidated && props.isFormatValidated ? ORANGEY_YELLOW : 'red')} ;
+		border: solid 1px ${(props) => (props.isFormatValidated ? ORANGEY_YELLOW : DARK_RED)} ;
 	}
 	::placeholder {
 		color: ${GREYISH_BROWN};

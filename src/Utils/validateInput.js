@@ -19,8 +19,12 @@ export const removeInvalidChar = (text, type = 'both') => {
 export const addSpace = (seed) => {
 	let newSeed = [];
 	const removeSpaceSeed = seed.replace(/[^0-9]/g, '');
+	// const removeSpaceSeed = seed.replace(/[^0-9 ]*$/g, '');
+	// const removeSpaceSeed = seed.replace(/(\s+$)|\s/g, function($0, $1) {
+	// 	return $1 ? '' : ' ';
+	// });
 	for (let i = 0; i < removeSpaceSeed.length; i++) {
-		if ((i + 1) % 5 === 0 && i + 1 != removeSpaceSeed.length) {
+		if ((i + 1) % 5 === 0 && i + 1 !== removeSpaceSeed.length) {
 			newSeed.push(removeSpaceSeed[i] + ' ');
 		} else {
 			newSeed.push(removeSpaceSeed[i]);
